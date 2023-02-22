@@ -1,14 +1,17 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from .models import User
+from django.contrib.auth import get_user_model
 
 
 class UserForm(UserCreationForm):
-    email = forms.EmailField(label="이메일")
-    family = forms.CharField(label="가족관계")
-    f_HP = forms.Field(label="자녀연락처")
-    address = forms.CharField(label="주소")
+    # username = forms.CharField(label="아이디")
+    # password = forms.CharField(label="비밀번호")
+    family = forms.CharField(label="보호자 관계")
+    number = forms.Field(label="보호자 연락처")
+    phone = forms.CharField(label="본인 연락처")
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = User
-        fields = ("username", "password1", "password2", "email", "family", "f_HP", "address")
+        fields = ("username", "password1", "password2",  "phone", "family", "number")

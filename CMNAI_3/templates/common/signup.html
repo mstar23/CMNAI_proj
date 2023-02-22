@@ -20,24 +20,19 @@
                    value="{{ form.password2.value|default_if_none:'' }}">
         </div>
         <div class="mb-3">
-            <label for="email">이메일</label>
-            <input type="text" class="form-control" name="email" id="email"
-                   value="{{ form.email.value|default_if_none:'' }}">
+            <label for="phone">본인 연락처</label>
+            <input type="text" class="form-control" name="phone" id="phone"
+                   value="{{ form.phone.value|default_if_none:'' }}">
         </div>
-                <div class="mb-3">
-            <label for="email">가족관계</label>
+        <div class="mb-3">
+            <label for="family">보호자 관계</label>
             <input type="text" class="form-control" name="family" id="family"
                    value="{{ form.family.value|default_if_none:'' }}">
         </div>
-                <div class="mb-3">
-            <label for="email">자녀연락처</label>
-            <input type="text" class="form-control" name="f_HP" id="f_HP"
-                   value="{{ form.f_HP.value|default_if_none:'' }}">
-        </div>
-                <div class="mb-3">
-            <label for="email">주소</label>
-            <input type="text" class="form-control" name="address" id="address"
-                   value="{{ form.address.value|default_if_none:'' }}">
+        <div class="mb-3">
+            <label for="number">보호자 연락처</label>
+            <input type="text" class="form-control" name="number" id="number"
+                   value="{{ form.number.value|default_if_none:'' }}">
         </div>
         <button type="submit" class="btn btn-primary">생성하기</button>
     </form>
