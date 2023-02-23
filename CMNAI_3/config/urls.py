@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from final import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('final/',  include('final.urls')),
     path('common/', include('common.urls')),
-    path('', views.index, name='index'),  # '/' 에 해당되는 path
+    path('',  auth_views.LoginView.as_view(template_name='common/login.html'), name='login'),
+    # path('', views.index, name='index'),# '/' 에 해당되는 path
+                                          # #첫페이지를 어떤 디자인으로 할 건지 지정하는 경로
 ]
