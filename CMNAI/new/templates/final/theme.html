@@ -1,0 +1,60 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="style_word" type="text/css" href="/static/style_word.css">
+    <title>eksdj 페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100;300;700&display=swap');
+    </style>
+
+</head>
+<body>
+<div class="container">
+    <div><a id="themebtn1" class="btn btn-primary" style="color:black; line-height: 30px;" href="{% url 'final:word_create_f' %}" >과일테마</a>
+    <div><a id="themebtn2" class="btn btn-primary" style="color:black; line-height: 30px;" href="{% url 'final:word_create_a' %}" >동물테마</a>
+    <div><a id="themebtn3" class="btn btn-primary" style="color:black; line-height: 30px;" href="{% url 'final:word_create_p' %}" >식물테마</a>
+    <div><a id="themebtn4" class="btn btn-primary" style="color:black; line-height: 30px;" href="{% url 'final:word_create_v' %}" >교통테마</a>
+</div>
+
+<!--    <div class="controls__colors colbtn">-->
+<!--        <div class="controls__color jsColor" id="jsMode" style="background-color: black; float: left; display:none"></div>-->
+<!--        <div class="controls__color jsColor" id="jsMode1" style="background-color: white; float: left;"></div>-->
+<!--    </div>-->
+<!--    <h5 class="my-3 border-bottom pb-2">오늘의 일기 // word_test.html // 이전페이지 분석 결과 : {{ trans.model_text }}</h5>-->
+<!--    <h5 class="my-3 border-bottom pb-2">랜덤 정답 : {{tex}} // 랜덤 초성 : {{cho}}</h5>-->
+<!--    <p class="jsAnal" style="font-size: 50px">{{result}}</p>-->
+<!--    <canvas id="jsCanvas" class="canvas"></canvas>-->
+<!--    <canvas id="canvas_top" class="canvas_top"></canvas>-->
+
+<!--        <div class="controls">-->
+
+<!--        <div class="controls__btns">-->
+<!--            <button id="jsMode">Fill</button>-->
+<!--            <button id="jsSave">저장하기</button>-->
+<!--            <button id="jsReloadX" >새로고침 안함 분석하기</button>-->
+<!--&lt;!&ndash;            <button id="jsReloadX" >새로고침 안함 분석하기</button>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a href="C:\python__\Final\test_data\" download><button id="jsSave">Save</button></a>&ndash;&gt;-->
+<!--&lt;!&ndash;            <button type="button" onclick="location.href='C:\python__\Final\test_data\asd.png'">Save</button></a>&ndash;&gt;-->
+
+<!--        </div>-->
+<!--        <div class="controls__colors" id="jsColors" position="relative">-->
+<!--            <div class="controls__color jsColor" position="relative" style="background-color: black;"></div>-->
+<!--            <div class="controls__color jsColor" position="relative" style="background-color: white;"></div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+</body>
+
+<!--    <div><a href="{% url 'final:word_trans' %}" class="btn btn-primary">분석 버튼</a></div>-->
+<script src="{% static 'app_word.js' %}"></script>
+<!--<div><a href="{% url 'final:word_trans' %}" class="btn btn-primary">분석 버튼</a></div>-->
+
+</html>
+
+{% endblock %}

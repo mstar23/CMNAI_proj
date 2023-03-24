@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>감정달력</title>
+</head>
+<body>
+<link rel="stylesheet" type="text/css" href="{% static 'calender.css' %}">
+  <div class="calendar" style="position: relative; left: -350px">
+    <div class="header">
+      <div class="year-month"></div>
+      <div class="nav">
+        <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+        <button class="nav-btn go-today" onclick="goToday()">Today</button>
+        <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+      </div>
+    </div>
+    <div class="main">
+      <div class="days">
+        <div class="day">일</div>
+        <div class="day">월</div>
+        <div class="day">화</div>
+        <div class="day">수</div>
+        <div class="day">목</div>
+        <div class="day">금</div>
+        <div class="day">토</div>
+      </div>
+      <div class="dates"></div>
+    </div>
+  </div>
+
+  <script>
+    var liter = JSON.parse("{{ context_json|escapejs }}");
+		var model_test = new Array();
+		for (var i=0; i<liter.length; i++)
+		{
+			var mood_set = [];
+			var before_date = liter[i].date
+			mood_set[0] = parseInt(before_date.split('-')[0])
+			mood_set[1] = parseInt(before_date.split('-')[1])
+			mood_set[2] = parseInt(before_date.split('-')[2].split(' ')[0])
+			mood_set[3] = liter[i].color
+            mood_set[4] = liter[i].id
+
+			model_test.push(mood_set)
+		}
+
+
+<!--    for(var i=0; i<model_test.length; i++){-->
+<!--        console.log(model_test[i][0], model_test[i][1],model_test[i][2],model_test[i][3]);-->
+<!--    }-->
+
+let date = new Date();
+
+const renderCalender = () => {
+  const viewYear = date.getFullYear();
+  const viewMonth = date.getMonth();
+
+  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+
+  const prevLast = new Date(viewYear, viewMonth, 0);
+  const thisLast = new Date(viewYear, viewMonth + 1, 0);
+
+  const PLDate = prevLast.getDate();
+  const PLDay = prevLast.getDay();
+
+  const TLDate = thisLast.getDate();
+  const TLDay = thisLast.getDay();
+
+  const prevDates = [];
+  const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+  const nextDates = [];
+
+  const date_info = new Array();
+  for(let j=0; j<model_test.length; j++){
+    var tmp_date_info=[];
+    if(model_test[j][0]==viewYear&&model_test[j][1]==viewMonth+1){
+    tmp_date_info[0]= model_test[j][2];
+    tmp_date_info[1]= model_test[j][3];
+    tmp_date_info[2]= model_test[j][4];
+    date_info.push(tmp_date_info);
+           }
+        }
+
+  if (PLDay !== 6) {
+    for (let i = 0; i < PLDay + 1; i++) {
+      prevDates.unshift(PLDate - i);
+    }
+  }
+
+  for (let i = 1; i < 7 - TLDay; i++) {
+    nextDates.push(i);
+  }
+
+  const dates = prevDates.concat(thisDates, nextDates);
+  const firstDateIndex = dates.indexOf(1);
+  const lastDateIndex = dates.lastIndexOf(TLDate);
+
+  dates.forEach((date, i) => {
+    const condition = i >= firstDateIndex && i < lastDateIndex + 1
+                      ? 'this'
+                      : 'other';
+
+    if(condition=='other'){
+      dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+      console.log(dates[i])
+      }
+    else{
+        for(let j=0; j<date_info.length; j++){
+            if (dates[i]==parseInt(date_info[j][0])) {
+              var n = j
+              var a = 'y'
+              console.log(dates[i], date_info[j][0],date_info[j][1])
+               }
+         }
+        if(a=='y'){
+          var mood_id = date_info[n][2]
+          var mood_color = date_info[n][1]
+          dates[i] = `<div class="date" style="background-color:${mood_color}"><a href="/final/${mood_id}" class=${condition}>${date}</a></div>`;
+          console.log(dates[i])
+          }
+          else{
+          dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+          console.log(dates[i])
+          }
+    }
+  });
+
+  document.querySelector('.dates').innerHTML = dates.join('');
+  const today = new Date();
+  if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+    for (let date of document.querySelectorAll('.this')) {
+      if (+date.innerText === today.getDate()) {
+        date.classList.add('today');
+        break;
+      }
+    }
+  }
+};
+
+renderCalender();
+
+const prevMonth = () => {
+  date.setMonth(date.getMonth() - 1);
+  renderCalender();
+};
+
+const nextMonth = () => {
+  date.setMonth(date.getMonth() + 1);
+  renderCalender();
+};
+
+const goToday = () => {
+  date = new Date();
+  renderCalender();
+};
+</script>
+</body>
+</html>
+{% endblock %}
+

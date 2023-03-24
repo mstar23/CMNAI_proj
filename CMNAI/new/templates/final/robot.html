@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8"/>
+      <meta name="viewport" content="width=device-width,initial-scale=1"/>
+      <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+      <title>Rock, Scissors, Paper with TensorFlow.js and Fingerpose</title>
+      <link rel="icon" href="/static/favicon.jpg">
+      <script defer="defer" src="/static/runtime.bundle.js"></script><script defer="defer" src="/static/main.bundle.js"></script>
+      <link href="/static/main.css" rel="stylesheet">
+   </head>
+   <body>
+      <div id="root">
+         </br>
+         <h1 class="ff-8bit">같이  가위 ✌️ 바위 ✊ 보 🤚</h1>
+         <p class="instructions">컴퓨터와 함께 가위바위보를 해볼까요?<br>어렵지 않으니 손이 잘 인식 되도록 화면에 손을 정확하게 보여주세요!</p>
+         <div class="game-container">
+            <div class="player">
+               <h2 class="player-headline"><span class="nick">나</span><span class="score" id="score1">0</span></h2>
+               <div class="player-container">
+                  <video id="player-video" class="player-video" poster="/static/human.jpg" playsinline></video>
+                  <div class="player-hand-container">
+                     <div id="player-hand" class="player-hand"></div>
+                     <svg id="timer-ring" class="timer-ring" height="100" width="100">
+                        <circle class="timer-ring-circle" stroke-width="6" stroke="white" fill="transparent" r="38" cx="50" cy="50"/>
+                        <circle id="timer-ring-circle" class="timer-ring-circle" stroke-width="6" stroke="blue" fill="transparent" r="38" cx="50" cy="50"/>
+                     </svg>
+                  </div>
+               </div>
+            </div>
+            <div class="player">
+               <h2 class="player-headline"><span class="nick">Robot</span><span class="score" id="score2">0</span></h2>
+               <div class="robot-container"><img id="robot" class="avatar" src="/static/robot.jpg" alt=""> <img id="robot-hand" class="robot-hand" alt=""></div>
+            </div>
+            <div class="messages"><span id="message" class="message-text message-fadeInOut"></span></div>
+         </div>
+      </div>
+   </body>
+</html>
+{% endblock %}
