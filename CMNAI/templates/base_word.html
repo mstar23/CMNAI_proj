@@ -1,0 +1,23 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">
+    <!-- pybo CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'style_word.css' %}">
+    <title>CMNAI_aka.~</title>
+</head>
+<body>
+<a href="{% url 'final:diary' %}" class="btn btn-primary">일기쓰기</a><a href="{% url 'final:copy' %}" class="btn btn-primary">받아쓰기</a><a href="{% url 'final:opencv' %}" class="btn btn-primary">OPEN CV</a>
+<!-- 네비게이션바 -->
+{% include "navbar.html" %}
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>
