@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load final_filter %}
+{% block content %}
+
+<div class="container my-3">
+    <!-- 질문 -->
+    <h2 class="border-bottom py-2">{{ diary.subject }}</h2>
+    <div class="card my-3">
+        <div class="card-body">
+            <div class="card-text" style="white-space: pre-line;">{{ diary.content }}</div>
+            <div class="card-text" style="white-space: pre-line;">{{ diary.model_text }}</div>
+            <img src="{{ diary.url_html }}" >
+            <div class="d-flex justify-content-end">
+                <div class="badge bg-light text-dark p-2">
+                    {{ diary.create_date }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

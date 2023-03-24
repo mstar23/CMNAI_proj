@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load final_filter %}
+{% block content %}
+<!--{% load static %}-->
+<!--<link rel="stylesheet" type="text/css" href="{% static 'bootstrap.min.css' %}">-->
+
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+        <h1>copy.html</h1>
+        </tbody>
+    </table>
+    <a href="{% url 'final:diary' %}" class="btn btn-primary">일기쓰기</a>
+    <a href="{% url 'final:copy' %}" class="btn btn-primary">받아쓰기</a>
+    <a href="{% url 'final:opencv' %}" class="btn btn-primary">OPEN CV</a>
+    <br><br><br><br>
+    <table>
+        <a href="{% url 'final:word_create_f' %}" class="btn btn-primary">글자 맞추기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<!--        <a href="{% url 'final:word_test' %}" class="btn btn-primary">그림 맞추기</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--        <a href="{% url 'final:word_test' %}" class="btn btn-primary">숫자 놀이</a>-->
+    </table>
+</div>
+{% endblock %}
