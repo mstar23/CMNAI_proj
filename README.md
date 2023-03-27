@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=Cylinder&color=000000FF&height=300&section=header&text=CMNAI&fontSize=90" />
+<img src="https://capsule-render.vercel.app/api?type=Cylinder&color=FFFFFFFF&height=300&section=header&text=CMNAI&fontSize=90" />
 
 ### CMNAI : 현재 프로젝트 진행 폴더
 ### Process : 분업별 자료들
