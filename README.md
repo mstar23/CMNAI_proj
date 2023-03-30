@@ -1,9 +1,9 @@
 # CMNAI
 ## 노인 치매 예방 및 재활 프로그램
 
-<p align="center">
+<p align="left">
   <br>
-  <img src="./CMNAI/new/static/webcam/001.png" width="500">
+  <img src="./CMNAI/new/static/webcam/001.png" width="700">
   <br>
 </p>
 
