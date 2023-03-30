@@ -1,5 +1,3 @@
-<img src="https://capsule-render.vercel.app/api?type=wave&color=A7DEEEFF&height=300&section=header&text=CMNAI&fontSize=90" />
-
 # CMNAI
 ## 노인 치매 예방 및 재활 프로그램
 
@@ -25,7 +23,7 @@ GIF Images
 
 ## 기술 스택
 
-| Django |
+| Django | 
 |:------:|
 | ![dj]  |
 
