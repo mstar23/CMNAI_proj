@@ -3,7 +3,7 @@
 
 <p align="center">
   <br>
-  <img src="./CMNAI/new/static/webcam/001.png">
+  <img src="./CMNAI/new/static/webcam/001.png" width="200">
   <br>
 </p>
 
