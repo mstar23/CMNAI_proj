@@ -12,11 +12,10 @@
 ## 프로젝트 소개
 
 <p align="justify">
-프로젝트 개요/동기
+  노인 ~
 </p>
 
 <p align="center">
-GIF Images
 </p>
 
 <br>
@@ -31,24 +30,23 @@ GIF Images
 
 ## 구현 기능
 
-### 기능 1
+### 오늘의 일기
 
-### 기능 2
+### 지난 기억
 
-### 기능 3
+### 단어 퀴즈
 
-### 기능 4
+### 같이 즐겨요
 
 <br>
 
-## 배운 점 & 아쉬운 점
+## 개선할 점
 
 <p align="justify">
-
+  
 </p>
 
 <br>
-
 
 <!-- Stack Icon Refernces -->
 
