@@ -1,0 +1,92 @@
+@-webkit-keyframes stripe-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+@keyframes stripe-slide {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+body {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: sans-serif;
+  background-color: #FEF1FD;
+}
+
+.btn {
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  line-height: normal;
+  cursor: pointer;
+  -moz-user-select: text;
+  display: block;
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 16px 36px 22px;
+  background-color: #F1F4F8;
+  color:  #735E9E;
+  border: 2px solid  #735E9E;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  transition: all 0.5s ease;
+}
+.btn:-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+.btn--stripe {
+  overflow: hidden;
+  position: relative;
+  top: 30px;
+  background-color: #FEF1FD;
+}
+.btn--stripe:after {
+  content: "";
+  display: block;
+  height: 200px;
+  width: 300px;
+  border-top: 1px solid #FEF1FD;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-size: 7px 7px;
+}
+.btn--stripe:hover {
+  color: #551E69;
+}
+.btn--stripe:hover:after {
+  /*background-image: repeating-linear-gradient(45deg, #fff, #fff 1px, transparent 2px, transparent 5px);*/
+  border-top: 1px solid #FEF1FD;
+  -webkit-animation: stripe-slide 12s infinite linear forwards;
+          animation: stripe-slide 12s infinite linear forwards;
+}
+.btn--large {
+  width: 150%;
+}
+.btn--radius {
+  border-radius: 36px;
+  background-color: #FEF1FD;
+  color: #735E9E;
+}
+.btn--radius:hover {
+  color: #551E69;
+}
+
+
+
