@@ -1,17 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=300&section=header&text=CMNAI&fontSize=90)
-## 노인 치매 예방 및 재활 프로그램
-
-<p align="center">
-  <br>
-  <img src="./CMNAI/new/static/webcam/001.png" width="700">
-  <br>
-</p>
-
-
-## 목차
-<p align="justify">
-  수정할것
-</p>
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0&height=350&section=header&text=CMNAI&fontSize=90&desc=노인%20치매%20예방%20및%20재활%20프로그램&descSize=25&descAlignY=75)
 
 ## 프로젝트 소개
 
@@ -24,7 +11,7 @@
 
 <br>
 
-## 기술 스택
+## 🪄기술 스택
 <div style="text-align: center;">
   <img src="https://img.shields.io/badge/pycharm-000000?style=for-the-badge&logo=pycharm&logoColor=white">
   <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
