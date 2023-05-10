@@ -54,6 +54,7 @@
 > > 로봇과 랜덤으로 가위바위보 게임을 할 수 있습니다.
 
 ---
-
+<a href="[https://suave-lilac-075.notion.site/Dalchive-ec0bc59746804968a085c2cf46151c80](https://billowy-bag-87f.notion.site/2023-03-01-2023-03-31-d03d8d70933943028175273800cc911c)"><img src="https://img.shields.io/badge/CMNAI.proj-ffffff?style=for-the-badge&logo=notion&logoColor=black"/>
+--- 
 ### CMNAI : 현재 프로젝트 진행 폴더
 ### Process : 분업별 자료들
