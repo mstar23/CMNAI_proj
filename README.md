@@ -6,10 +6,7 @@
   노인 ~
 </p>
 
-<p align="center">
-</p>
-
-<br>
+---
 
 ## ⚒️기술 스택
 <div align="center">
@@ -33,7 +30,7 @@
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 
-<br>
+---
 
 ## 🪄구현 기능
 
@@ -45,13 +42,7 @@
 
 * ### 같이 즐겨요
 
-<br>
-
-<br>
-
-<!-- Stack Icon Refernces -->
-
-[dj]: /images/django.png
+---
 
 ### CMNAI : 현재 프로젝트 진행 폴더
 ### Process : 분업별 자료들
