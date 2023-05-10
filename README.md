@@ -1,13 +1,16 @@
-# CMNAI
+![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&height=300&section=header&text=CMNAI&fontSize=90)
 ## 노인 치매 예방 및 재활 프로그램
 
-<p align="left">
+<p align="center">
   <br>
   <img src="./CMNAI/new/static/webcam/001.png" width="700">
   <br>
 </p>
 
-목차
+## 목차
+<p align="justify">
+  수정할것
+</p>
 
 ## 프로젝트 소개
 
@@ -30,13 +33,13 @@
 
 ## 구현 기능
 
-### 오늘의 일기
+* ### 오늘의 일기
 
-### 지난 기억
+* ### 지난 기억
 
-### 단어 퀴즈
+* ### 단어 퀴즈
 
-### 같이 즐겨요
+* ### 같이 즐겨요
 
 <br>
 
