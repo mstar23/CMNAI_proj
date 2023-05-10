@@ -1,6 +1,6 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0&height=350&section=header&text=CMNAI&fontSize=90&desc=노인%20치매%20예방%20및%20재활%20프로그램&descSize=25&descAlignY=75)
 
-## 프로젝트 소개
+## 👴🏻프로젝트 소개👵🏻
 
 <p align="justify">
   노인 ~
@@ -11,7 +11,7 @@
 
 <br>
 
-## 🪄기술 스택
+## ⚒️기술 스택
 <div align="center">
   <img src="https://img.shields.io/badge/pycharm-000000?style=for-the-badge&logo=pycharm&logoColor=white">
   <img src="https://img.shields.io/badge/django-092E20?style=for-the-badge&logo=django&logoColor=white">
@@ -31,7 +31,7 @@
 
 <br>
 
-## 구현 기능
+## 🪄구현 기능
 
 * ### 오늘의 일기
 
