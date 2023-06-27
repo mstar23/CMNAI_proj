@@ -1,0 +1,317 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+{% load final_filter %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>감정달력</title>
+     <style>
+            body {
+              margin: 0;
+              padding: 0;
+              width: 100vw; /* 전체 너비를 화면 너비의 80%로 제한 */
+              height: 100vh; /* 전체 높이를 화면 높이의 80%로 제한 */
+            }
+
+            .wrapper {
+              display: flex;
+              flex-direction: row;
+              justify-content: left;
+              width:1500px;
+              height: 500px;
+            }
+
+            .calender {
+              flex-basis: 45%;
+              background-color: #f2f2f2;
+              margin:50px;
+            }
+
+            .legend {
+              flex-basis: 10%;
+              text-align:center;
+              margin_top:50px;
+            }
+
+            .quizz {
+              flex-basis: 45%;
+              margin_top:50px;
+            }
+
+            .table {
+              width: 100%;
+              border: 1px solid #444444;
+            }
+
+    </style>
+</head>
+<body>
+<br><br><br><br>
+<link rel="stylesheet" type="text/css" href="{% static 'calender.css' %}">
+<div class="wrapper">
+<div class="calendar" style="position: relative; right: 0px; width:800px;">
+    <div class="header">
+      <div class="year-month" ></div>
+      <div class="nav" style="position: fixed; left: 680px;">
+        <button class="nav-btn go-prev" onclick="prevMonth()">&lt;</button>
+        <button class="nav-btn go-today" onclick="goToday()">Today</button>
+        <button class="nav-btn go-next" onclick="nextMonth()">&gt;</button>
+      </div>
+    </div>
+    <div class="main" style=" width: 800px; height:100px; position: fixed;">
+      <div class="days">
+        <div class="day">일</div>
+        <div class="day">월</div>
+        <div class="day">화</div>
+        <div class="day">수</div>
+        <div class="day">목</div>
+        <div class="day">금</div>
+        <div class="day">토</div>
+      </div>
+      <div class="dates" style="height:414px;"></div>
+    </div>
+  </div>
+<div class="legend">
+<table style="font-size:20px;">
+  <tr>
+    <td><div style=" width:50px; height:50px; border-radius: 36px; margin-left:15px;"></div></td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td><div style=" width:50px; height:50px; border-radius: 36px; margin-left:15px;"></div></td>
+    <td> </td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#7E7474E0; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">불안</td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#F18746F7; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">당황</td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#6397E7FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">슬픔</td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#EE6060FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">분노</td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#8BC065FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">상처</td>
+  </tr>
+  <tr>
+    <td><div style="background-color:#F8F05AF7; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div></td>
+    <td style="text-align: center; vertical-align: middle;">기쁨</td>
+  </tr>
+</table>
+</div>
+<div class="quizz" style="position: fixed; right: 100px; top: 190px;">
+<div class="container my-3 ">
+    <table class="table  table"  style="margin-top:80px; text-align: center; vertical-align: middle; width:530px;" >
+        <thead>
+        <tr class="table-dark" >
+            <th style="background-color:#2961BA;">번호</th>
+            <th style="width:60%; background-color:#2961BA;">주제</th>
+<!--            <th>글쓴이</th>-->
+            <th style="background-color:#2961BA;">날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if obj_list %}
+        {% for obj in obj_list %}
+        <tr class="text-center">
+            <td style="display: block; text-align: center; font-size:25px;">
+                <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+                {{ obj_list.paginator.count|sub:obj_list.start_index|sub:forloop.counter0|add:1 }}
+            </td>
+            <td class="text-start">
+                <a href="{% url 'main:word_detail' obj.id %}" style="display: block; text-align: center; font-size:25px; margin:10px;">{{ obj.category }} 초성 퀴즈</a>
+            </td>
+            <td style="font-size:20px;">{{ obj.create_date }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="4">초성퀴즈 내역이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <div style="position: fixed; top: 80%; right: 12%;">
+        <!-- 페이징처리 시작 -->
+    <ul class="pagination justify-content-center" style="position: fixed; top: 700px; left: 1400px;">
+        <!-- 이전페이지 -->
+        {% if obj_list.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ obj_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in obj_list.paginator.page_range %}
+        {% if page_number == obj_list.number %}
+        <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if obj_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ obj_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
+        </div>
+</div>
+</div>
+</div>
+
+
+  <script>
+    var liter = JSON.parse("{{ context_json|escapejs }}");
+      var model_test = new Array();
+      for (var i=0; i<liter.length; i++)
+      {
+         var mood_set = [];
+         var before_date = liter[i].date
+         mood_set[0] = parseInt(before_date.split('-')[0])
+         mood_set[1] = parseInt(before_date.split('-')[1])
+         mood_set[2] = parseInt(before_date.split('-')[2].split(' ')[0])
+         mood_set[3] = liter[i].color
+         mood_set[4] = liter[i].id
+
+         model_test.push(mood_set)
+         console.log(before_date)
+      }
+
+
+<!--    for(var i=0; i<model_test.length; i++){-->
+<!--        console.log(model_test[i][0], model_test[i][1],model_test[i][2],model_test[i][3]);-->
+<!--    }-->
+
+let date = new Date();
+
+const renderCalender = () => {
+  const viewYear = date.getFullYear();
+  const viewMonth = date.getMonth();
+
+  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+
+  const prevLast = new Date(viewYear, viewMonth, 0);
+  const thisLast = new Date(viewYear, viewMonth + 1, 0);
+
+  const PLDate = prevLast.getDate();
+  const PLDay = prevLast.getDay();
+
+  const TLDate = thisLast.getDate();
+  const TLDay = thisLast.getDay();
+
+  const prevDates = [];
+  const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+  const nextDates = [];
+
+  const date_info = new Array();
+  for(let j=0; j<model_test.length; j++){
+    var tmp_date_info=[];
+    if(model_test[j][0]==viewYear&&model_test[j][1]==viewMonth+1){
+    tmp_date_info[0]= model_test[j][2];
+    tmp_date_info[1]= model_test[j][3];
+    tmp_date_info[2]= model_test[j][4];
+    date_info.push(tmp_date_info);
+           }
+        }
+
+  if (PLDay !== 6) {
+    for (let i = 0; i < PLDay + 1; i++) {
+      prevDates.unshift(PLDate - i);
+    }
+  }
+
+  for (let i = 1; i < 7 - TLDay; i++) {
+    nextDates.push(i);
+  }
+
+  const dates = prevDates.concat(thisDates, nextDates);
+  const firstDateIndex = dates.indexOf(1);
+  const lastDateIndex = dates.lastIndexOf(TLDate);
+
+  dates.forEach((date, i) => {
+    const condition = i >= firstDateIndex && i < lastDateIndex + 1
+                      ? 'this'
+                      : 'other';
+
+    if(condition=='other'){
+      dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+<!--      console.log(dates[i])-->
+      }
+    else{
+        for(let j=0; j<date_info.length; j++){
+            if (dates[i]==parseInt(date_info[j][0])) {
+              var n = j
+              var a = 'y'
+<!--              console.log(dates[i], date_info[j][0],date_info[j][1])-->
+               }
+         }
+        if(a=='y'){
+          var mood_id = date_info[n][2]
+          var mood_color = date_info[n][1]
+
+          dates[i] = `<div class="date" style="background-color:${mood_color}"><a href="/main/senti/${mood_id}" class=${condition}>${date}</a></div>`;
+<!--          console.log(dates[i])-->
+          }
+          else{
+          dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+<!--          console.log(dates[i])-->
+          }
+    }
+  });
+
+  document.querySelector('.dates').innerHTML = dates.join('');
+  const today = new Date();
+  if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+    for (let date of document.querySelectorAll('.this')) {
+      if (+date.innerText === today.getDate()) {
+        date.classList.add('today');
+        break;
+      }
+    }
+  }
+};
+
+renderCalender();
+
+const prevMonth = () => {
+  date.setMonth(date.getMonth() - 1);
+  renderCalender();
+};
+
+const nextMonth = () => {
+  date.setMonth(date.getMonth() + 1);
+  renderCalender();
+};
+
+const goToday = () => {
+  date = new Date();
+  renderCalender();
+};
+</script>
+</body>
+</html>
+{% endblock %}

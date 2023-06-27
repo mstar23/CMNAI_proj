@@ -1,0 +1,128 @@
+{% extends 'index_nav_word.html' %}
+{% load final_filter %}
+{% block content %}
+<!--<head><link href="/static/style_mypage.css" rel="stylesheet"/></head>-->
+<!-- Masthead-->
+<section class="page-section bg-light" id="portfolio" style="height: 100vh;">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="section-heading text-uppercase"
+                style="font-size:60px; text-align:center; text-decoration: underline; text-decoration-thickness: 3px; text-decoration-color:#ffc800;">
+                초성 퀴즈 기록</h1>
+        </div>
+            <div class="row" style="margin: 40px;">
+        <h3 class="section-heading text-uppercase" style="font-size:40px; text-align:center;" id="ratio"></h3>
+    </div>
+
+
+            <div class="table-responsive">
+                <table class="table custom-table" style="margin: 0 auto; width: 900px;">
+                    <thead>
+                    <tr style="background-color:#ffc800;">
+                        <th scope="col" style="font-size:40px; text-align: center; vertical-align: middle;">정답</th>
+                        <th scope="col" style="font-size:40px; text-align: center; vertical-align: middle;">내가 쓴 글씨</th>
+                        <th scope="col" style="font-size:40px; text-align: center; vertical-align: middle;">결과</th>
+                    </tr>
+                    </thead>
+                    <tbody id="total_list">
+                    </tbody>
+                </table>
+            </div>
+
+    </div>
+
+</section>
+
+
+<!-- Button_zip-->
+
+<script>
+        var liter_word = JSON.parse("{{ context_json_word|escapejs }}");
+        var mood_set_word = [];
+
+        mood_set_word[0] = liter_word.cho_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[1] = liter_word.tex_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[2] = liter_word.model_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[3] = liter_word.check_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[4] = liter_word.ratio.replace('[',"").replace(']',"").split(", ")
+
+
+        var ratio = mood_set_word[4]
+        if (ratio >= 90) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😁 정말 훌륭해요!";
+        } else if (ratio >= 70 && ratio < 90) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😆 참 잘했어요!";
+        } else if (ratio >= 50 && ratio < 70) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!🙂 헷갈리는게 많았죠?";
+        } else {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😐 너무 어려웠나봐요...";
+        }
+
+        var tex = mood_set_word[1]
+        var mod = mood_set_word[2]
+        var che = mood_set_word[3]
+
+        const tex_info = new Array();
+        const che_info = new Array();
+        const mod_info = new Array();
+
+
+
+        for (var i = 0; i < tex.length; i++){
+            var tmp_tex_info=[];
+            var tmp_che_info=[];
+            var tmp_mod_info=[];
+
+            tmp_tex_info.push(tex[i].replace("'","").replace("'",""));
+            tmp_che_info.push(che[i].replace("'","").replace("'",""));
+            tmp_mod_info.push(mod[i].replace("'","").replace("'",""));
+
+            tex_info.push(tmp_tex_info);
+            che_info.push(tmp_che_info);
+            mod_info.push(tmp_mod_info);
+
+
+            if (tex_info[i] !== undefined) {
+
+                var make_list = document.getElementById("total_list")
+                let wordlist = document.createElement('tr');
+                wordlist.setAttribute('scope','row');
+
+                let tex_list = document.createElement('td');
+                tex_list.setAttribute('id','tex_list');
+                tex_list.setAttribute('style','text-align: center; vertical-align: middle; font-size:30px;');
+                tex_list.innerHTML += tex_info[i];
+
+                let mod_list = document.createElement('td');
+                mod_list.setAttribute('id','mod_list');
+                mod_list.setAttribute('style','text-align: center; vertical-align: middle; font-size:30px;');
+                mod_list.innerHTML += mod_info[i];
+
+                let che_list = document.createElement('td');
+                che_list.setAttribute('id','che_list');
+                che_list.setAttribute('style','text-align: center; vertical-align: middle; font-size:30px;');
+                che_list.innerHTML += che_info[i];
+
+
+                wordlist.appendChild(tex_list);
+                wordlist.appendChild(mod_list);
+                wordlist.appendChild(che_list);
+                make_list.appendChild(wordlist);
+            }
+        };
+</script>
+<script type="text/javascript">
+
+    function downScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY+300, behavior: 'smooth'});
+        console.log(winY);
+    }
+
+    function upScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY-300, behavior: 'smooth'});
+        console.log(winY);
+    }
+</script>
+{% endblock %}

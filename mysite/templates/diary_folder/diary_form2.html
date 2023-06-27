@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <title>일기 페이지</title>
+    <script type="text/javascript">
+        window.onload = function(){
+            const ctx_top = document.getElementById("canvas_top").getContext("2d");
+            const ctx = document.getElementById("jsCanvas").getContext("2d");
+            var img = new Image();
+            img.src = "{{trans.image_html_path}}";
+<!--            img.src = ".." + "{{trans.image_html_path}}";-->
+<!--            img.src = "/static/diary_data/0.png";-->
+<!--            img.src = "../media/images/image.jpg";-->
+<!--            img.src = "../media/images/user_folder/디디/diary_save/일기쓰기 (0).png";-->
+            console.log(img.src)
+<!--            console.log(".." + "{{trans.image_html_path}}")-->
+            img.onload = function(){
+                ctx.drawImage(img, 0,0, 1210, 1210);
+            }
+
+            let str = "{{ trans.model_text }}";
+            let arr = str.split("");
+            var x = 30;
+            var y = 30;
+
+            ctx_top.font = "90px Gamja Flower";
+            ctx_top.textBaseline = "top";
+            ctx_top.fillStyle = "black";
+            ctx_top.textAlign = "left";
+            for(let i = 0; i < arr.length; i++){
+                if(i == 10){y = y+120; x = 30;}
+                if(i == 20){y = y+120; x = 30;}
+                if(i == 30){y = y+120; x = 30;}
+                if(i == 40){y = y+120; x = 30;}
+                if(i == 50){y = y+120; x = 30;}
+                if(i == 60){y = y+120; x = 30;}
+                if(i == 70){y = y+120; x = 30;}
+                if(i == 80){y = y+120; x = 30;}
+                if(i == 90){y = y+120; x = 30;}
+                ctx_top.fillText(arr[i],x,y);
+                x = x+120;
+            }
+        }
+
+        function downScroll() {
+            var winY = window.pageYOffset;
+            window.scrollTo({top:winY+300, behavior: 'smooth'});
+            console.log(winY);
+        }
+
+        function upScroll() {
+            var winY = window.pageYOffset;
+            window.scrollTo({top:winY-300, behavior: 'smooth'});
+            console.log(winY);
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <div style="position: relative;">
+        <input id="upbtn" class="btn btn-primary" style="color:black; position:fixed;font-size: 30px; line-height: 30px;" type="button" value="올려보기" onclick="upScroll()">
+        <input id="downbtn" class="btn btn-primary" style="color:black; position:fixed;font-size: 30px; line-height: 30px;" type="button" value="더 쓰기" onclick="downScroll()">
+<!--        <div><a id="jsSave" class="btn btn&#45;&#45;stripe analbtn" style="color:black; position:fixed; line-height: 30px; font-size: 30px;" href="{% url 'main:word_trans' %}" >확인하기</a></div>-->
+        <div><a class="btn btn--stripe resultbtn" style="color:black; position:fixed;line-height: 30px; font-size: 30px;" href="{% url 'main:diary_result' %}">글씨보기</a></div>
+    </div>
+    <div class="controls__colors colbtn" style="top:70%;">
+        <div class="controls__color jsColor" id="jsMode" style="background-color: black; display:none;  border-radius: 36px;" ></div>
+        <div class="controls__color jsColor" id="jsMode1" style="background-color: white; border-radius: 36px;"></div>
+    </div>
+<!--    <div class="controls__btns" id="fillbtn">-->
+<!--&lt;!&ndash;        <button id="jsMode">Fill</button>&ndash;&gt;-->
+<!--        <button id="">Save</button>-->
+<!--    </div>-->
+    </br></br></br>
+    <p class="my-3 border-bottom pb-2" style="font-size:50px;">오늘의 일기 </p>
+<!--    <div class="card-text" style="white-space: pre-line;"></div>-->
+
+    <canvas id="jsCanvas" class="canvas"></canvas>
+    <canvas id="canvas_top" class="canvas_top"></canvas>
+</div>
+            <form id="upload-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button id="upload-button" class="btn btn--stripe analbtn" style="color:black; line-height: 30px; font-size: 30px;" type="submit">확인하기</button>
+    </form>
+
+    <form action="{% url 'main:word_trans' %}">
+        <button id="upload-button2" type="submit" style="display:none">Upload2</button>
+    </form>
+</body>
+<script src="{% static 'app.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function uploadImageToServer(imageData, canvasTopData) {
+    var formData = new FormData();
+    formData.append('image_data', imageData);
+    formData.append('canvas_top_data', canvasTopData);
+
+    $.ajax({
+      url: '/main/upload_diary/',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr, settings) {
+        // CSRF 토큰 설정
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      },
+      success: function(response) {
+        console.log("성공")
+      },
+      error: function(xhr, status, error) {
+        console.log("실패")
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();  // 기본 동작(폼 전송) 방지
+      var canvas = document.getElementById('jsCanvas');
+      var context = canvas.getContext('2d');
+      var imageData = canvas.toDataURL('image/jfif');
+
+      var canvasTop = document.getElementById('canvas_top');
+      var contextTop = canvasTop.getContext('2d');
+      var canvasTopData = canvasTop.toDataURL('image/jfif');
+
+      // 이미지 데이터 서버로 전송
+      uploadImageToServer(imageData, canvasTopData);
+    });
+  });
+</script>
+<script type="text/javascript">
+    const uploadButton = document.querySelector('#upload-button');
+    const uploadButton2 = document.querySelector('#upload-button2');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.querySelector('#upload-button');
+      const uploadButton2 = document.querySelector('#upload-button2');
+
+      uploadButton.addEventListener('click', () => {
+        setTimeout(() => {
+          uploadButton2.click();
+        }, 100);
+      });
+    });
+</script>
+</html>
+
+{% endblock %}

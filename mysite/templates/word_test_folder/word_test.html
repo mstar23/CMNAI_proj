@@ -1,0 +1,128 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+<!doctype html>
+<html lang="ko">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="style_word" type="text/css" href="/static/style_word.css">
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">-->
+    <!--    <link rel="stylesheet" type="text/css" href="{% static 'main_page.css' %}">-->
+    <title>eksdj 페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100;300;700&display=swap');
+
+    </style>
+
+
+</head>
+<body>
+</br></br>
+<div class="container">
+    <a id="themebtn1" class="btn btn--radius"
+       style="color:black; line-height: 20px; padding: 10px; top: 300px; left: 1350px; font-size: 39px;"
+       href="{% url 'main:word_create_f' %}">과일</a>
+    <a id="themebtn2" class="btn btn--radius"
+       style="color:black; line-height: 20px; padding: 10px; top: 370px; left: 1350px; font-size: 39px;"
+       href="{% url 'main:word_create_a' %}">동물</a>
+    <a id="themebtn3" class="btn btn--radius"
+       style="color:black; line-height: 20px; padding: 10px; top: 440px; left: 1350px; font-size: 39px;"
+       href="{% url 'main:word_create_p' %}">식물</a>
+    <a class="btn btn--stripe resultbtn"
+       style="color:black; line-height: 50px; padding: 0px; position: absolute; top: 370px; left: 1170px; font-size: 30px; border-width: medium;"
+       href="{% url 'main:word_result' %}">점수보기</a>
+    <form id="upload-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button id="upload-button" class="btn btn--stripe analbtn" type="submit"
+                style="color:black; line-height: 50px; padding: 0px; position: absolute; top: 300px; left: 1170px; font-size: 30px; border-width: medium;">
+            제출하기
+        </button>
+    </form>
+    <div class="controls__colors colbtn">
+        <div class="controls__color jsColor" id="jsMode"
+             style="background-color: black; float: left; display:none; border-radius: 36px; position: fixed; top: 440px; left: 1220px;"></div>
+        <div class="controls__color jsColor" id="jsMode1"
+             style="background-color: white; float: left; border-radius: 36px; position: fixed; top: 440px; left: 1220px;"></div>
+    </div>
+    <div style="position: absolute; top: 90px;">
+        <p class="jsAnal" style="font-size: 70px; position: fixed; top: 610px; left: 450px;">
+            <b>{{result}}</b></p>
+        <p class="my-3 border-bottom pb-2"
+           style="font-size: 100px; position: fixed; top: 120px; left: 340px;">{{theme}}초성: {{cho}}</p>
+        <br>
+        <canvas id="jsCanvas" class="canvas" style="position: fixed; top: 270px; left: 150px;"></canvas>
+        <canvas id="canvas_top" class="canvas_top"
+                style="position: fixed; top: 270px; left: 150px;"></canvas>
+    </div>
+</div>
+
+
+</body>
+
+
+<form action="{% url 'main:word_test' %}">
+    <button id="upload-button2" type="submit" style="display:none; position: absolute; top: 900px;">Upload2</button>
+</form>
+<script src="{% static 'app_word.js' %}"></script>
+<script type="text/javascript">
+    const uploadButton = document.querySelector('#upload-button');
+    const uploadButton2 = document.querySelector('#upload-button2');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.querySelector('#upload-button');
+      const uploadButton2 = document.querySelector('#upload-button2');
+
+      uploadButton.addEventListener('click', () => {
+        setTimeout(() => {
+          uploadButton2.click();
+        }, 100);
+      });
+    });
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function uploadImageToServer(imageData) {
+    var formData = new FormData();
+    formData.append('image_data', imageData);
+
+    $.ajax({
+      url: '/main/upload/',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr, settings) {
+        // CSRF 토큰 설정
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      },
+      success: function(response) {
+<!--        alert('Image uploaded successfully!');-->
+            console.log("성공")
+      },
+      error: function(xhr, status, error) {
+<!--        alert('Image upload failed. Please try again.');-->
+            console.log("실패")
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();  // 기본 동작(폼 전송) 방지
+      var canvas = document.getElementById('jsCanvas');
+      var context = canvas.getContext('2d');
+      var imageData = canvas.toDataURL('image/jfif');
+
+      // 이미지 데이터 서버로 전송
+      uploadImageToServer(imageData);
+    });
+  });
+
+</script>
+
+</html>
+
+{% endblock %}

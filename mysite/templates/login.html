@@ -1,0 +1,159 @@
+{% extends 'base1.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'main_page.css' %}">
+    <title>eksdj 페이지</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100;300;700&display=swap');
+
+    </style>
+</head>
+<div class="container my-3" style="display:block; position: absolute; top: 500px;">
+    {% include "form_errors.html" %}
+    <form method="post" action="{% url 'main:login' %}" style="display:none;">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username">사용자ID {{word}}</label>
+            <input type="text" class="form-control" name="username" id="username"
+                   value="{{word}}">
+        </div>
+        <div class="mb-3 ">
+            <label for="password">비밀번호</label>
+            <input type="password" class="form-control" name="password" id="password"
+                   value="qwer1234!">
+        </div>
+        <button type="submit" class="btn btn-primary">로그인</button>
+    </form>
+</div>
+<body>
+<div class="container">
+    <div>
+        <!--        <a id="jsSave" class="btn btn btn&#45;&#45;stripe" style="color:black; line-height: 70px; position: fixed; top: 180px; left: 1100px; padding: 10px; font-size: 30px; width: 370px; height: 100px; font-size: 70px; color: #735E9E;" href="{% url 'main:login_word' %}">시작하기</a>-->
+        <form method="post" action="{% url 'main:signup' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn--radius"
+                    style="position: fixed; top: 305px; left: 1100px; width: 370px; height: 100px; padding: 5px; color: black; font-size: 70px; color: #735E9E;">
+                회원가입
+            </button>
+        </form>
+    </div>
+    <div class="controls__colors colbtn" style="align-items: center;">
+        <div class="controls__color jsColor" id="jsMode"
+             style="background-color: black; float: left; display:none; border-radius: 36px; position: fixed; top: 425px; left: 1150px; width: 250px; height: 50px;"></div>
+        <div class="controls__color jsColor" id="jsMode1"
+             style="background-color: white; float: left; border-radius: 36px; position: fixed; top: 425px; left:1150px; width: 250px; height: 50px;"></div>
+
+    </div>
+    <canvas id="jsCanvas" class="canvas" style="position: absolute; top: 150px;"></canvas>
+    <canvas id="canvas_top" class="canvas_top" style="position: absolute; top: 150px;"></canvas>
+    <canvas id="canvas_bot" class="canvas_bottom" style="position: absolute; top: 550px;"></canvas>
+
+
+    <form id="upload-form" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <button class="btn btn btn--stripe" id="upload-button" type="submit"
+                style="color:black; line-height: 70px; position: fixed; top: 180px; left: 1100px; padding: 10px; font-size: 30px; width: 370px; height: 100px; font-size: 70px; color: #735E9E;">
+            Upload
+        </button>
+    </form>
+
+    <form action="{% url 'main:login_word' %}">
+        <button id="upload-button2" type="submit" style=" display:none; position: absolute; top: 600px;">Upload2
+        </button>
+    </form>
+
+</div>
+
+<!--<br><br><br><br><br><br>-->
+<!--<img src="/static/last_data/image12.jpg"> 정상 작동-->
+<!--<br><br><br><br><br><br>-->
+<!--<img src="../media/images/image.jpg"> 정상 작동-->
+
+</body>
+<script src="{% static 'app_word.js' %}"></script>
+<script src="{% static 'app_word_bot.js' %}"></script>
+<script type="text/javascript">
+    const nameInput = document.querySelector('#username');
+    const passInput = document.querySelector('#password');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const uploadButton = document.querySelector('#upload-button');
+    const uploadButton2 = document.querySelector('#upload-button2');
+    const passwordValue = passInput.value;
+    console.log(nameInput)
+    console.log(passInput)
+    console.log(submitButton)
+    console.log(passwordValue)
+    console.log(nameInput.value)
+    console.log(uploadButton)
+    console.log(nameInput.value.length)
+    if (nameInput.value.length > 1){
+            submitButton.click();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.querySelector('#upload-button');
+      const uploadButton2 = document.querySelector('#upload-button2');
+
+      uploadButton.addEventListener('click', () => {
+        setTimeout(() => {
+          uploadButton2.click();
+        }, 100);
+      });
+    });
+
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function uploadImageToServer(imageData, canvasBotData) {
+    var formData = new FormData();
+    formData.append('image_data', imageData);
+    formData.append('canvas_bot_data', canvasBotData);
+
+    $.ajax({
+      url: '/main/upload/',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr, settings) {
+        // CSRF 토큰 설정
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      },
+      success: function(response) {
+<!--        alert('Image uploaded successfully!');-->
+            console.log("성공")
+      },
+      error: function(xhr, status, error) {
+<!--        alert('Image upload failed. Please try again.');-->
+            console.log("실패")
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();  // 기본 동작(폼 전송) 방지
+      var canvas = document.getElementById('jsCanvas');
+      var context = canvas.getContext('2d');
+      var imageData = canvas.toDataURL('image/jfif');
+
+      var canvasBot = document.getElementById('canvas_bot');
+      var contextBot = canvasBot.getContext('2d');
+      var canvasBotData = canvasBot.toDataURL('image/jfif');
+
+
+      // 이미지 데이터 서버로 전송
+      uploadImageToServer(imageData, canvasBotData);
+    });
+  });
+
+
+
+</script>
+{% endblock %}

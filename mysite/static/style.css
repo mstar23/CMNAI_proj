@@ -1,0 +1,147 @@
+
+
+.canvas{
+    position: absolute;
+    width: 1200px ;
+    height: 1200px ;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+}
+
+
+
+.controls {
+    position: relative;
+    margin-top: 80px; /* 바깥 여백(위) */
+    display: flex; /* 디스플레이 설정은 유동성 있게~ */
+    flex-direction: column; /* 아이템 수직정렬 */
+    align-items: center; /* 가운데 정렬하라 */
+}
+
+.controls .controls__btns {
+    position: relative;
+    margin-bottom: 30px;/* 바깥 여백(아래) */
+}
+
+.controls__btns button:active {
+    position: relative;
+    transform: scale(0.58);
+}
+
+.controls .controls__colors {
+    position: relative;
+    display: flex;
+}
+
+.controls__colors .controls__color {
+
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+}
+
+.canvas_top{
+    position: relative;
+    width: 1200px ;
+    height: 1200px ;
+    text-align: center;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.068);
+
+}
+
+#canvas_top {
+  opacity : 1;
+}
+
+#upbtn {
+  top: 30%;
+  left: 88%;
+  width: 150px;
+  height: 50px;
+  background-color: #F1F4F8;
+  border: #2b35c2 medium solid;
+  position: fixed;
+  z-index: 2;
+  border-radius: 36px;
+}
+
+#downbtn {
+  top: 40%;
+  left: 88%;
+  width: 150px;
+  height: 50px;
+  background-color: #F1F4F8;
+  border: #2b35c2 medium solid;
+  position: fixed;
+  z-index: 2;
+  border-radius: 36px;
+}
+
+.analbtn {
+  top: 50%;
+  left: 88%;
+  width: 150px;
+  height: 50px;
+  background-color: #F1F4F8;
+  border: #2b35c2 medium solid;
+  position: fixed;
+  z-index: 2;
+}
+
+.analbtn:hover {
+    border: #2b35c2 medium solid;
+    background-color: #F1F4F8;
+}
+
+.analbtn:hover:after {
+    border: #2b35c2 medium solid;
+    background-color: #F1F4F8;
+}
+
+
+.colbtn {
+  top: 60%;
+  left: 91%;
+  width: 150px;
+  height: 50px;
+  position: fixed;
+  z-index: 2;
+}
+
+.fillbtn {
+  top: 80%;
+  left: 88%;
+  width: 150px;
+  height: 50px;
+  position: fixed;
+  background-color: #F1F4F8;
+  border: #2b35c2 medium solid;
+  position: fixed;
+  z-index: 2;
+}
+
+.resultbtn {
+  top: 60%;
+  left: 88%;
+  width: 150px;
+  height: 50px;
+  background-color: #F1F4F8;
+  border: #2b35c2 3px solid;
+  position: fixed;
+  z-index: 2;
+}
+
+.resultbtn:hover {
+    border: #2b35c2 medium solid;
+    background-color: #F1F4F8;
+}
+
+.resultbtn:hover:after {
+    border: #2b35c2 medium solid;
+    background-color: #F1F4F8;
+}
+

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load final_filter %}
+{% load static %}
+{% block content %}
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <title>일기 페이지</title>
+</head>
+
+<body>
+<div class="container">
+    <input id="upbtn" class="btn btn-primary" style="color:black; position:fixed; line-height: 30px; font-size: 30px;" type="button" value="올려보기" onclick="upScroll()">
+    <input id="downbtn" class="btn btn-primary" style="color:black; position:fixed; line-height: 30px; font-size: 30px;" type="button" value="내려보기" onclick="downScroll()">
+    <div><a id="jsSave" class="btn btn--stripe analbtn" style="color:black; position:fixed; line-height: 30px; font-size: 30px;" href="/main/mypage_calender/" >기억보기</a></div>
+    </br></br></br></br></br></br>
+    <p class="my-3 border-bottom pb-2" style="font-size:50px;">{{ diary.create_date }}</p>
+        <div class="card my-3" style="position: relative; width:1210px; height:1210px;">
+            <div class="card-body">
+                <img src="{{ diary.image_html_path }}" style="position: absolute; top: 0; left: 0;">
+            </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    function downScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY+300, behavior: 'smooth'});
+        console.log(winY);
+    }
+
+    function upScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY-300, behavior: 'smooth'});
+        console.log(winY);
+    }
+</script>
+{% endblock %}
+

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .fixed-button {
+        position: fixed;
+        bottom: 100px;
+        right: 40px;
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+    }
+
+        .fixed-color {
+        position: fixed;
+        bottom: 55%;
+        right: 10%;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+    }
+</style>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>CMNAI</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+<!--    <link href="/static/style_diary.css" rel="stylesheet"/>-->
+    <link href="/static/css/styles.css" rel="stylesheet"/>
+
+</head>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-bottom navbar-shrink" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="/static/assets/img/CMNAI2.png" alt="..."/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="display: flex; gap: 50px;">
+                {% if not user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">로그인</a>
+                </li>
+                {% endif %}
+                {% if request.resolver_match.url_name == 'word_detail' or request.resolver_match.url_name == 'word_result' %}
+                <input class="text-center btn btn-primary btn-xl text-uppercase"
+                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                       type="button"
+                       value="올려보기" onclick="upScroll()">
+                <input class="text-center btn btn-primary btn-xl text-uppercase"
+                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                       type="button" value="내려보기" onclick="downScroll()">
+                <div><a id="jsSave" class="text-center btn btn-primary btn-xl text-uppercase"
+                        style="color:black; line-height: 13px; margin-bottom: 10px;"
+                        href="/main/mypage_calender/">기억보기</a></div>
+                {% else %}
+                <a id="themebtn1" class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px;"
+                   href="{% url 'main:word_create_f' %}">과일</a>
+                <a id="themebtn2" class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px;"
+                   href="{% url 'main:word_create_a' %}">동물</a>
+                <a id="themebtn3" class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px;"
+                   href="{% url 'main:word_create_p' %}">식물</a>
+                <form id="upload-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <button id="upload-button" class="text-center btn btn-primary btn-xl text-uppercase"
+                            style="color:black; line-height: 13px; margin-bottom: 10px;" type="submit">
+                        제출하기
+                    </button>
+                </form>
+                <a class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px;"
+                   href="{% url 'main:word_result' %}">점수보기</a>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <a class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px; margin-left:60px;"
+                   href="{% url 'main:logout' %}">그만하기</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div style="margin-bottom: 10px; position: relative; display:none;" id="up">
+    <button class="fixed-button" style="z-index: 1;" onclick="scrollToTop()">위로</button>
+</div>
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+</script>
+
+{% if request.resolver_match.url_name == 'word_detail' or request.resolver_match.url_name == 'word_result' %}
+<script>
+    document.getElementById('up').style.display = 'block';
+      document.getElementById('themebtn1').style.display = 'none';
+  document.getElementById('themebtn2').style.display = 'none';
+  document.getElementById('themebtn3').style.display = 'none';
+</script>
+{% endif %}
+
+<script>
+
+</script>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

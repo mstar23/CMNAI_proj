@@ -1,0 +1,24 @@
+<!-- 네비게이션바 -->
+<div class="navbar navbar-expand-lg navbar-light bg-light border-bottom" style="position: absolute; top: 50px; left:500px;">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'main:main_page' %}" style="font-size: 30px;">처음으로🏠</a>
+                </li>
+            </ul>
+        </div>
+        <a class="navbar-brand" href="{% url 'main:main_page' %}" style="font-size: 30px;">CMNAI</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="{% url 'main:logout' %}" style="font-size: 30px;">{{ user.username }} (로그아웃)</a>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'main:login' %}" style="font-size: 30px;">로그인</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

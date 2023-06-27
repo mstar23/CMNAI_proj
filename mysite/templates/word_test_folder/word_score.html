@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load final_filter %}
+{% block content %}
+<style>
+    .title {
+        display: inline-block;
+        text-align:center;
+        line-height: 50px;
+        font-size:35px;
+        width:380px;
+        height:50px;
+        background-color:#735E9E;
+        color:white;
+    }
+
+    .result {
+        display: inline-block;
+        text-align:center;
+        line-height: 50px;
+        width:380px;
+        background-color:#B89DEA;
+        font-size:40px;
+        color:white;
+    }
+
+    .word1 {
+        margin:10px 0px 10px 0px;
+        line-height: 1.7;
+    }
+
+    #scorebtn {
+      top: 10%;
+      left: 88%;
+      width: 150px;
+      height: 50px;
+      background-color: #F1F4F8;
+      border: #2b35c2 3px solid;
+      position: fixed;
+      z-index: 2;
+
+</style>
+<div class="container">
+    </br></br></br></br></br></br>
+    <p class="my-3 border-bottom pb-2" style="font-size:50px;"></p>
+<body>
+        <div class="card my-3" style="position: relative; width:1210px; display:flex;">
+            <div class="card-body">
+                <h3 class="my-3 border-bottom pb-2" style="font-size:40px; text-align:center;" id="ratio"></h3>
+                <div class="title"; style="margin-left:15px;"><정답></div>
+                <div class="title"><글씨></div>
+                <div class="title"><결과></div>
+
+                <br>
+                <div class="result"; style="margin-left:15px; flex:1;"><h2 class="word1" id="tex_list"></h2></div>
+                <div class="result"><h2 class="word1" id="mod_list"></h2></div>
+                <div class="result"><h2 class="word1" id="che_list"></h2></div>
+            </div>
+        </div>
+
+<div class="container">
+    <input id="upbtn" class="btn btn-primary" style="color:black; position:fixed;font-size: 30px; line-height: 30px;" type="button" value="올려보기" onclick="upScroll()">
+    <input id="downbtn" class="btn btn-primary" style="color:black; position:fixed;font-size: 30px; line-height: 30px;" type="button" value="더 보기" onclick="downScroll()">
+    <div><a id="jsSave" class="btn analbtn" style="color:black; position:fixed;font-size: 30px; line-height: 30px;" href="/main/mypage_calender/" >기억보기</a></div>
+</div>
+</div>
+</body>
+
+<script>
+        var liter_word = JSON.parse("{{ context_json_word|escapejs }}");
+        var mood_set_word = [];
+
+        mood_set_word[0] = liter_word.cho_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[1] = liter_word.tex_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[2] = liter_word.model_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[3] = liter_word.check_text.replace('[',"").replace(']',"").split(", ")
+        mood_set_word[4] = liter_word.ratio.replace('[',"").replace(']',"").split(", ")
+        console.log(mood_set_word)
+
+        var ratio = mood_set_word[4]
+        if (ratio >= 90) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😁 정말 훌륭해요!";
+        } else if (ratio >= 70 && ratio < 90) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😆 참 잘했어요!";
+        } else if (ratio >= 50 && ratio < 70) {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!🙂 헷갈리는게 많았죠?";
+        } else {
+          document.getElementById("ratio").innerHTML="점수는 " + ratio + " 점 입니다!😐 너무 어려웠나봐요...";
+        }
+
+        var tex = mood_set_word[1]
+        var mod = mood_set_word[2]
+        var che = mood_set_word[3]
+
+        const tex_info = new Array();
+        const che_info = new Array();
+        const mod_info = new Array();
+
+        for (var i = 0; i < tex.length; i++){
+            var tmp_tex_info=[];
+            var tmp_che_info=[];
+            var tmp_mod_info=[];
+
+            tmp_tex_info.push(tex[i].replace("'","").replace("'",""));
+            tmp_che_info.push(che[i].replace("'","").replace("'",""));
+            tmp_mod_info.push(mod[i].replace("'","").replace("'",""));
+
+            tex_info.push(tmp_tex_info);
+            che_info.push(tmp_che_info);
+            mod_info.push(tmp_mod_info);
+            if (tex_info[i] !== undefined) {
+                document.getElementById("tex_list").innerHTML += tex_info[i]+"<br>";
+                document.getElementById("che_list").innerHTML += che_info[i]+"<br>";
+                document.getElementById("mod_list").innerHTML += mod_info[i]+"<br>";
+            }
+        };
+</script>
+<script type="text/javascript">
+
+    function downScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY+300, behavior: 'smooth'});
+        console.log(winY);
+    }
+
+    function upScroll() {
+        var winY = window.pageYOffset;
+        window.scrollTo({top:winY-300, behavior: 'smooth'});
+        console.log(winY);
+    }
+</script>
+{% endblock %}

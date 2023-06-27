@@ -1,0 +1,925 @@
+{% extends 'index_nav_login.html' %}
+{% block content %}
+<style>
+    .d-flex.justify-content-center .row {
+        width: 100%;
+        max-width: 1500px; /* 원하는 최대 너비 설정 */
+        margin: 0 auto;
+    }
+
+    .d-flex.justify-content-center .row .col-sm-6.mb-4 {
+        width: 25%; /* 1행 4열로 조정할 경우, 각 요소의 너비를 25%로 설정 */
+    }
+
+    /* 추가적인 스타일 조정이 필요한 경우 여기에 추가 */
+</style>
+<style>
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 30px;
+  }
+
+  td {
+    text-align: left;
+  }
+  mark{
+  background: linear-gradient(to top, yellow 90%, transparent 50%);
+  }
+
+</style>
+<!-- Masthead-->
+<header class="masthead">
+    <div class="container">
+        <br><br><br><br><br><br>
+<!--        <div class="masthead-subheading">Welcome To Our Studio!</div>-->
+        <div class="masthead-heading text-uppercase">CMNAI</div>
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#contact">Tell Me More</a>-->
+    </div>
+        <div class="text-center">
+        <br><br><br><br><br><br><br><br>
+    </div>
+</header>
+
+
+{% if user.is_authenticated %}
+<!-- Contact-->
+<section class="page-section" id="contact" style="display: none"></section>
+{% else %}
+<section class="page-section" id="contact">
+    <div class="container">
+        <div class="text-center" id="contact_move">
+<!--            <h2 class="section-heading text-uppercase">Contact Us</h2>-->
+<!--            <p class="section-subheading text-muted">-&#45;&#45;&#45;&#45;</p>-->
+        </div>
+        <!-- * * * * * * * * * * * * * * *-->
+        <!-- * * SB Forms Contact Form * *-->
+        <!-- * * * * * * * * * * * * * * *-->
+        <!-- This form is pre-integrated with SB Forms.-->
+        <!-- To make this form functional, sign up at-->
+        <!-- https://startbootstrap.com/solution/contact-forms-->
+        <!-- to get an API token!-->
+        <form method="post" action="{% url 'main:login' %}" style="display:none;">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username">사용자ID {{nick}}</label>
+                <input type="text" class="form-control" name="username" id="username"
+                       value="{{nick}}">
+            </div>
+            <div class="mb-3 ">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" name="password" id="password"
+                       value="qwer1234!">
+            </div>
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </form>
+        <form action="{% url 'main:login_word' %}">
+            <button id="upload-button2" type="submit" style=" display:none;">
+                Upload2
+            </button>
+        </form>
+        <div class="row align-items-stretch mb-5">
+            <div class="col-md-666">
+                <div class="canvas-container">
+                    <!--                                <h1>이름</h1>-->
+                    <h2 class="section-heading text-uppercase">이름</h2>
+                    <canvas id="jsCanvas" class="canvas" style="position: absolute"></canvas>
+                    <canvas id="canvas_top" class="canvas_top" style="position: relative"></canvas>
+                    <!--                                <h1>별명</h1>-->
+                    <h2 class="section-heading text-uppercase">별명</h2>
+                    <canvas id="canvas_bot" class="canvas_bottom" style="position: relative"></canvas>
+                </div>
+            </div>
+            <div class="col-md-6666 justify-content-center" style="position: sticky; top: 0; height: 300px;">
+                <div class="login_up_color">
+                    <br><br><br>
+                    <form method="post" action="{% url 'main:signup' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-xl text-uppercase">
+                            회원가입
+                        </button>
+                    </form>
+                </div>
+                <div class="login_up_color">
+                    <form id="upload-form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-xl text-uppercase" id="upload-button">
+                            시작하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center" style="color: white;">
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</section>
+{% endif %}
+
+<div id="eraser" style="margin-bottom: 10px; position: relative;">
+    <button class="jsColor fixed-color controls__colors" id="jsMode"
+            style="background-color: black; float: left; display:none;  color:white; z-index: 1;">
+        연필
+    </button>
+    <button class="jsColor fixed-color controls__colors" id="jsMode1"
+            style="background-color: white; float: left; z-index: 1;">지우개</button>
+</div>
+
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio">
+    <div class="container" >
+        <div class="text-center" id="portfolio_move">
+            <h2 class="section-heading text-uppercase">놀이터</h2>
+<!--            <br>-->
+<!--            <p>컨텐츠를 클릭하면 설명을 볼 수 있어요.</p>-->
+            <h2 class="section-subheading text-muted">컨텐츠를 클릭하면 설명을 볼 수 있어요.</h2>
+            <br><br>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="row">
+                <div class="col-sm-3 mb-4">
+                    <!-- Portfolio item 1-->
+                    <div class="portfolio-item">
+                        <!-- 콘텐츠 변경 -->
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal1" >
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="/static/assets/img/portfolio/일기.png" alt="..." />
+                        </a>
+                        <br>
+                        <div class="portfolio-caption" style="border : 1px solid black">
+                            <div class="portfolio-caption-heading">오늘의 일기</div>
+<!--                            <div class="portfolio-caption-subheading text-muted">Illustration</div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-4">
+                    <!-- Portfolio item 2-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal2">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="/static/assets/img/portfolio/퀴즈.png" alt="..."/>
+                        </a>
+                        <br>
+                        <div class="portfolio-caption" style="border : 1px solid black">
+                            <div class="portfolio-caption-heading">초성 퀴즈</div>
+<!--                            <div class="portfolio-caption-subheading text-muted">Graphic Design</div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-4">
+                    <!-- Portfolio item 4-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal4">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="/static/assets/img/portfolio/가위바위보.png" alt="..."/>
+                        </a>
+                        <br>
+                        <div class="portfolio-caption" style="border : 1px solid black">
+                            <div class="portfolio-caption-heading">같이 즐겨요</div>
+<!--                            <div class="portfolio-caption-subheading text-muted">Branding</div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3 mb-4">
+                    <!-- Portfolio item 3-->
+                    <div class="portfolio-item">
+                        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal3">
+                            <div class="portfolio-hover">
+                                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="/static/assets/img/portfolio/통계.png" alt="..."/>
+                        </a>
+                        <br>
+                        <div class="portfolio-caption" style="border : 1px solid black">
+                            <div class="portfolio-caption-heading">지난 기억</div>
+<!--                            <div class="portfolio-caption-subheading text-muted">Identity</div>-->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        <br>
+<!--        <div class="text-center"><h1>컨텐츠를 클릭하면 설명을 볼 수 있어요.<br><br></h1></div>-->
+    </div>
+        <div class="text-center">
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</section>
+
+<div class="col-sm-2 mb-4" style="display: none;">
+    <!-- Portfolio item 6-->
+    <div class="portfolio-item">
+        <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6" id="contact_login2">
+            <div class="portfolio-hover">
+                <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+            </div>
+            <img class="img-fluid" src="/static/assets/img/portfolio/6.jpg" alt="..."
+                 style="width: 300px; height: 300px;"/>
+        </a>
+        <div class="portfolio-caption">
+            <div class="portfolio-caption-heading">Window</div>
+            <div class="portfolio-caption-subheading text-muted">Photography</div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Services-->
+<section class="page-section" id="services">
+    <div class="container">
+        <div class="text-center" id="services_move">
+            <h2 class="section-heading text-uppercase">활용기술</h2>
+            <!--            <h3 class="section-subheading text-muted">-&#45;&#45;&#45;&#45;</h3>-->
+            <br><br><br>
+        </div>
+        <div class="row text-center">
+            <div class="col-md-4">
+
+                <img class="img-fluid" src="/static/assets/img/logos/오씨알.png" alt="..."
+                     style="width: 300px; height: 300px;"/>
+                <h4 class="my-3">OCR</h4>
+                <p class="text-muted">지정한 영역 내의 글자를 인식하여 텍스트로 전환하는<br>인공지능 기술입니다.</p>
+                <p class="text-muted">변환된 텍스트는 새로운 결과 데이터를 도출하기 위한<br>입력데이터로 사용됩니다.</p>
+                <p class="text-muted">CMNAI는 작성된 손글씨를 이미지로 저장함과 동시에<br>OCR기술을 활용해 텍스르로 변환합니다.</p>
+            </div>
+            <div class="col-md-4">
+                <img class="img-fluid" src="/static/assets/img/logos/버트.png" alt="..."
+                     style="width: 300px; height: 300px;"/>
+                <h4 class="my-3">KoBERT</h4>
+                <p class="text-muted">BERT모델이란 사람의 말에 대한 문맥을 학습한<br>자연어 처리 딥러닝 모델입니다.</p>
+                <p class="text-muted">KoBERT는 SKTBrain에서 공개한 기계번역 모델로<br>기존 BERT모델에 한국어 데이터를 학습시킨 모델입니다.</p>
+                <p class="text-muted">이를 통해 CMNAI는 일기에 대한 감정을 도출해<br>감정달력을 구현합니다.</p>
+            </div>
+            <div class="col-md-4">
+                <img class="img-fluid" src="/static/assets/img/logos/가위.png" alt="..."
+                     style="width: 300px; height: 300px;"/>
+                <h4 class="my-3">Web Security</h4>
+                <p class="text-muted">JavaScript 오픈소스 머신러닝 라이브러리로 모델의<br>관절 정보를 손가락에 매핑하여 손동작을<br>실시간으로 인식합니다.</p>
+                <p class="text-muted">CMNAI는 사용자의 손동작을 토대로 여러 활동을<br>즐길 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</section>
+
+
+
+<!-- Team -->
+<section class="page-section bg-light" id="team">
+    <div class="container">
+        <div class="text-center" id="team_move">
+            <h2 class="section-heading text-uppercase">Our Amazing Team</h2>
+            <br><br><br>
+        </div>
+        <div class="row">
+<!--            <div class="col-lg-2"></div>-->
+            <div class="col">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="/static/assets/img/team/1.jpg" alt="..."/>
+                    <h4>최근도</h4>
+                    <p class="text-muted">Lead Designer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Twitter Profile"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand Facebook Profile"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Parveen Anand LinkedIn Profile"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="/static/assets/img/team/2.jpg" alt="..."/>
+                    <h4>남태현</h4>
+                    <p class="text-muted">Lead Marketer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="/static/assets/img/team/3.jpg" alt="..."/>
+                    <h4>문지예</h4>
+                    <p class="text-muted">Lead Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="/static/assets/img/team/1.jpg" alt="..."/>
+                    <h4>한혜진</h4>
+                    <p class="text-muted">Lead Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="John Doe Twitter Profile"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="John Doe Facebook Profile"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="John Doe LinkedIn Profile"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col">
+                <div class="team-member">
+                    <img class="mx-auto rounded-circle" src="/static/assets/img/team/2.jpg" alt="..."/>
+                    <h4>홍소민</h4>
+                    <p class="text-muted">Lead Developer</p>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Jane Smith Twitter Profile"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Jane Smith Facebook Profile"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Jane Smith LinkedIn Profile"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+<!--            <div class="col-lg-2"></div>-->
+        </div>
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <p class="large text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque,
+                    laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <br><br><br><br><br><br><br><br><br><br><br>
+    </div>
+</section>
+
+
+<!-- Portfolio Modals-->
+<!-- Portfolio item 1 modal popup-->
+<div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg"
+                                                                  alt="Close modal"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-uppercase">일기 쓰기</h2>
+                        <h3 class="item-intro text-muted">오늘 하루를 기록해보세요!</h3>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="border: 2px solid black;">
+                        <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/일기_예시.png"
+                             alt="..." style="width: 100%; height: 100%;"/>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-8 text-center">
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>①</h3>
+                                        </td>
+                                        <td>
+                                            <h3>문장을 다 쓰면 <mark>온점(" . ")</mark>을<br> 꼭 찍어주세요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>②</h3>
+                                        </td>
+                                        <td>
+                                            <h3>일기를 다 썼다면 <br><mark>글씨 확인하기</mark>를 눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>③</h3>
+                                        </td>
+                                        <td>
+                                            <h3>일기를 기록하려면 <br><mark>다 썼어요</mark>를 눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-4" style="position: sticky; top: 30%; height: 300px;">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="올려보기">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="내려보기">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!--                        <div class="row justify-content-center">-->
+                <!--                            <div class="col-lg-8">-->
+                <div class="modal-body">
+                    <!-- Project details-->
+                    {% if user.is_authenticated %}
+                    <div class="container">
+                        <div class="row">
+                            <a href="{% url 'main:diary_create' %}">
+                                <button class="btn btn-primary btn-xl text-uppercase">일기쓰러 가기
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!--                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">-->
+                    <!--                                        <i class="fas fa-xmark me-1"></i>-->
+                    <!--                                        Close Project-->
+                    <!--                                    </button>-->
+                    <!--                                    <button class="fixed-button" onclick="scrollToTop()">위로</button>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--            <input class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--                   style="color:black; line-height: 13px; margin-bottom: 10px;"-->
+<!--                   type="button"-->
+<!--                   value="올려보기" onclick="upScroll()">-->
+<!--            <input class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--                   style="color:black; line-height: 13px; margin-bottom: 10px; margin-right:60px;"-->
+<!--                   type="button" value="내려보기" onclick="downScroll()">-->
+
+
+<!-- Portfolio item 2 modal popup-->
+<div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg"
+                                                                  alt="Close modal"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-uppercase">초성 퀴즈</h2>
+                        <h3 class="item-intro text-muted">초성을 보고 정답을 맞혀보세요!</h3>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6" style="border: 2px solid black;">
+                        <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/단어_예시.png"
+                             alt="..." style="width: 100%; height: 100%;"/>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-8 text-center">
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>①</h3>
+                                        </td>
+                                        <td>
+                                            <h3>정답을 적고 <br><mark>제출하기</mark>를 눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>②</h3>
+                                        </td>
+                                        <td>
+                                            <h3>채점결과를 확인하면<br> 다음 문제가 나와요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>③</h3>
+                                        </td>
+                                        <td>
+                                            <h3>전체 결과를 확인하려면<br> <mark>점수보기</mark>를 눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-4" style="position: sticky; top: 30%; height: 300px;">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="올려보기">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="내려보기">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <!-- Project details-->
+                    {% if user.is_authenticated %}
+                    <div class="row">
+                        <div class="col-4">
+                            <a href="{% url 'main:word_create_f' %}">
+                                <button class="btn btn-primary btn-xl text-uppercase" style="width: 60%;">🍈과일🍇</button>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'main:word_create_a' %}">
+                                <button class="btn btn-primary btn-xl text-uppercase" style="width: 60%;">‍🦺동물🐘</button>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="{% url 'main:word_create_p' %}">
+                                <button class="btn btn-primary btn-xl text-uppercase" style="width: 60%;">🍀식물🌸</button>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!--                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal"-->
+                    <!--                                            type="button">-->
+                    <!--                                        <i class="fas fa-xmark me-1"></i>-->
+                    <!--                                        Close Project-->
+                    <!--                                    </button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Portfolio item 3 modal popup-->
+<div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg"
+                                                                  alt="Close modal"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-uppercase">지난 기억</h2>
+                        <h3 class="item-intro text-muted">나만의 공간으로 들어오세요!</h3>
+                        <br>
+                    </div>
+                </div>q
+                <div class="row">
+                    <div class="col-6" style="border: 2px solid black;">
+                        <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/달력_예시.png"
+                             alt="..." style="width: 100%; height: 100%;"/>
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-8 text-center">
+                                <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>①</h3>
+                                        </td>
+                                        <td>
+                                            <h3>내가 쓴 일기와 그 날의 기분을 <br>한눈에 볼 수 있어요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>②</h3>
+                                        </td>
+                                        <td>
+                                            <h3>초성퀴즈 결과를 보고 <br>틀린 문제를 확인해요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>③</h3>
+                                        </td>
+                                        <td>
+                                            <h3>꾸준히 달력과 퀴즈목록을<br> 채워나가요.</h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-4" style="position: sticky; top: 30%; height: 300px;">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="올려보기">
+                                <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                                       type="button" value="내려보기">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="modal-body">
+                    {% if user.is_authenticated %}
+                    <div class="container">
+                        <div class="row">
+                            <a href="{% url 'main:mypage_calender' %}">
+                                <button class="btn btn-primary btn-xl text-uppercase">지난 기억 보기
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!-- Project details-->
+                    <!--                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">-->
+                    <!--                                <i class="fas fa-xmark me-1"></i>-->
+                    <!--                                Close Project-->
+                    <!--                            </button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Portfolio item 4 modal popup-->
+<div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg"
+                                                                  alt="Close modal"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-uppercase">같이 즐겨요</h2>
+                        <br>
+                    </div>
+                    <div class="col-5">
+                        <h3 class="item-intro text-muted">손동작을 기억하고 따라해보세요!</h3>
+                        <br>
+                    </div>
+                    <div class="col-5">
+                        <h3 class="item-intro text-muted">로보트와 가위바위보를 해요!</h3>
+                        <br>
+                    </div>
+                    <div class="col-2">
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5" style="border: 2px solid black;">
+                        <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/같이즐겨요_예시.png"
+                             alt="..." style="width: 100%; height: 100%;"/>
+                    </div>
+                    <div class="col-5" style="border: 2px solid black;">
+                        <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/로보트_예시.png"
+                             alt="..." style="width: 100%; height: 100%;"/>
+                    </div>
+                    <div class="col-2" style="position: sticky; top: 30%; height: 300px;">
+                        <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                               style="color:black; line-height: 13px; margin-bottom: 10px;"
+                               type="button" value="올려보기">
+                        <input class="popup-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                               style="color:black; line-height: 13px; margin-bottom: 10px;"
+                               type="button" value="내려보기">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    {% if user.is_authenticated %}
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <a href="{% url 'main:camera_view' %}">
+                                    <button class="btn btn-primary btn-xl text-uppercase">👴포즈 맞추기👵
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-5">
+                                <a href="{% url 'main:robot' %}">
+                                    <button class="btn btn-primary btn-xl text-uppercase">로보트와 가위바위보 ✌️✊✋
+                                    </button>
+                                </a>
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <!--                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">-->
+                    <!--                                <i class="fas fa-xmark me-1"></i>-->
+                    <!--                                Close Project-->
+                    <!--                            </button>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        <!-- Portfolio item 5 modal popup-->
+        <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg" alt="Close modal" /></div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="modal-body">
+                                    <!-- Project details-->
+                                    <h2 class="text-uppercase">Project Name</h2>
+                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                                    <img class="img-fluid d-block mx-auto" src="/static/assets/img/portfolio/5.jpg" alt="..." />
+                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <ul class="list-inline">
+                                        <li>
+                                            <strong>Client:</strong>
+                                            Southwest
+                                        </li>
+                                        <li>
+                                            <strong>Category:</strong>
+                                            Website Design
+                                        </li>
+                                    </ul>
+                                    <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button">
+                                        <i class="fas fa-xmark me-1"></i>
+                                        Close Project
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- Portfolio item 6 modal popup-->
+<div class="portfolio-modal modal" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true" style="width: 1000px; height: 390px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 25%);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project details-->
+                            <h2 class="text-uppercase">올바른 값을 입력하세요.</h2>
+                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button" id="contact_login3" style="display: none;">
+                                <i class="fas fa-xmark me-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/static/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+<script src="/static/app_word.js"></script>
+<script src="/static/app_word_bot.js"></script>
+<script type="text/javascript">
+    const nameInput = document.querySelector('#username');
+    const passInput = document.querySelector('#password');
+    const submitButton = document.querySelector('button[type="submit"]');
+    const uploadButton = document.querySelector('#upload-button');
+    const uploadButton2 = document.querySelector('#upload-button2');
+    const passwordValue = passInput.value;
+    console.log(nameInput)
+    console.log(passInput)
+    console.log(submitButton)
+    console.log(passwordValue)
+    console.log(nameInput.value)
+    console.log(uploadButton)
+    console.log(nameInput.value.length)
+    if (nameInput.value.length > 1){
+            submitButton.click();
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.querySelector('#upload-button');
+      const uploadButton2 = document.querySelector('#upload-button2');
+
+      uploadButton.addEventListener('click', () => {
+        setTimeout(() => {
+          uploadButton2.click();
+        }, 100);
+      });
+    });
+
+
+
+
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function uploadImageToServer(imageData, canvasBotData) {
+    var formData = new FormData();
+    formData.append('image_data', imageData);
+    formData.append('canvas_bot_data', canvasBotData);
+
+    $.ajax({
+      url: '/main/upload/',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr, settings) {
+        // CSRF 토큰 설정
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      },
+      success: function(response) {
+<!--        alert('Image uploaded successfully!');-->
+            console.log("성공")
+      },
+      error: function(xhr, status, error) {
+<!--        alert('Image upload failed. Please try again.');-->
+            console.log("실패")
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();  // 기본 동작(폼 전송) 방지
+      var canvas = document.getElementById('jsCanvas');
+      var context = canvas.getContext('2d');
+      var imageData = canvas.toDataURL('image/jfif');
+
+      var canvasBot = document.getElementById('canvas_bot');
+      var contextBot = canvasBot.getContext('2d');
+      var canvasBotData = canvasBot.toDataURL('image/jfif');
+
+
+      // 이미지 데이터 서버로 전송
+      uploadImageToServer(imageData, canvasBotData);
+    });
+  });
+
+
+
+
+
+</script>
+<script>
+// 드래그 앤 드롭 기능 구현
+var dragItems = document.querySelectorAll('.controls__colors');
+var isDragging = false;
+
+// 버튼 요소에 대해 이벤트 리스너 등록
+dragItems.forEach(function(dragItem) {
+  dragItem.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    var initialX = e.clientX - dragItem.offsetLeft;
+    var initialY = e.clientY - dragItem.offsetTop;
+
+    isDragging = true;
+
+    // 마우스 이동 이벤트 리스너
+    document.addEventListener('mousemove', moveItem);
+
+    // 마우스 업 이벤트 리스너
+    document.addEventListener('mouseup', function() {
+      document.removeEventListener('mousemove', moveItem);
+      isDragging = false;
+    });
+
+    // 요소 이동 함수
+    function moveItem(e) {
+      if (!isDragging) return;
+
+      var newX = e.clientX - initialX;
+      var newY = e.clientY - initialY;
+
+      // 모든 버튼 요소들의 위치 설정
+      dragItems.forEach(function(item) {
+        item.style.left = newX + 'px';
+        item.style.top = newY + 'px';
+      });
+    }
+  });
+});
+
+
+</script>
+<script>
+    // 문서가 로드되면 실행될 함수
+    window.onload = function() {
+        document.querySelector('a[href="#contact_move"]').click();
+
+        setTimeout(function() {
+            document.getElementById('contact_login2').click();
+        }, 1000);
+
+        setTimeout(function() {
+            document.getElementById('contact_login3').click();
+        }, 3000);
+    };
+</script>
+</body>
+</html>
+{% endblock %}

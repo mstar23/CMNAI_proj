@@ -1,0 +1,368 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    .nextbtn {
+      top: 20%;
+      left: 72%;
+      width: 150px;
+      height: 50px;
+      background-color: #F1F4F8;
+      border: #2b35c2 3px solid;
+      position: fixed;
+      z-index: 2;
+    }
+
+
+</style>
+<div style="margin-top:200px;">
+    <img id="introImg" src="{% get_static_prefix %}{{ img_path }}" border="0">
+</div>
+<div style="background-color: #EBECFA; display: flex; justify-content: center;">
+
+    <div class="container">
+        <div class="canvas-wrapper" style="position: fixed; top:120px; left:30%;">
+            <canvas id="output"></canvas>
+            <video id="video" playsinline="" style=" visibility: hidden; width: auto; height: auto;"></video>
+            <div id="emo"></div>
+            <div><a id="bt" class="nextbtn" href="{% url 'main:camera_view' %}"
+                    style="color:black; position:fixed; line-height: 40px; font-size: 30px; text-align:center; text-decoration:none;">다음</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Require the peer dependencies of hand-pose-detection. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-core"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script>
+<!-- You must explicitly require a TF.js backend if you're not using the TF.js union bundle. -->
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-webgl"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection"></script>
+<!--<script src="https://tistory3.daumcdn.net/tistory/5290078/skin/images/camera.js"></script> -->
+<script>
+
+
+let detector, camera, stats;
+let startInferenceTime, numInferences = 0;
+let inferenceTimeSum = 0, lastPanelUpdate = 0;
+let test = document.getElementById('introImg');
+let test2 = test.getAttribute("src");
+let test3 = test2.replace("/static/", "").replace(".png", "");
+
+const fingerLookupIndices = {
+  thumb: [0, 1, 2, 3, 4],
+  indexFinger: [0, 5, 6, 7, 8],
+  middleFinger: [0, 9, 10, 11, 12],
+  ringFinger: [0, 13, 14, 15, 16],
+  pinky: [0, 17, 18, 19, 20],
+}; // for rendering each finger as a polyline
+
+function isiOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+function isAndroid() {
+  return /Android/i.test(navigator.userAgent);
+}
+
+function isMobile() {
+  return isAndroid() || isiOS();
+}
+
+class Camera {
+  constructor() {
+    this.video = document.getElementById('video');
+    this.canvas = document.getElementById('output');
+    this.img = document.getElementById('introImg');
+    this.emo = document.getElementById("emo");
+    this.bt = document.getElementById('bt');
+    this.ctx = this.canvas.getContext('2d');
+    this.canvas.style.position="absolute";
+    this.canvas.style.top = "400";
+    this.canvas.style.right = "100";
+    this.emo.style.position="absolute";
+    this.emo.style.top = "0";
+    this.emo.style.left = "600";
+    this.bt.style.position="fixed";
+    this.bt.style.top = "-10";
+    this.bt.style.left = "700";
+  }
+
+  static async setupCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      throw new Error(
+        'Browser API navigator.mediaDevices.getUserMedia not available');
+    }
+
+    const $size = { width: 640, height: 540 };
+    const $m_size = { width: 360, height: 270 };
+    const videoConfig = {
+      'audio': false,
+      'video': {
+        facingMode: 'user',
+        // Only setting the video to a specified size for large screen, on
+        // mobile devices accept the default size.
+        width: isMobile() ? $m_size.width : $size.width,
+        height: isMobile() ? $m_size.height : $size.height,
+      }
+    };
+
+    const stream = await navigator.mediaDevices.getUserMedia(videoConfig);
+
+    const camera = new Camera();
+    camera.video.srcObject = stream;
+
+    await new Promise((resolve) => {
+      camera.video.onloadedmetadata = () => {
+        resolve(video);
+      };
+    });
+
+    camera.video.play();
+
+    const videoWidth = camera.video.videoWidth;
+    const videoHeight = camera.video.videoHeight;
+    // Must set below two lines, otherwise video element doesn't show.
+    camera.video.width = videoWidth;
+    camera.video.height = videoHeight;
+
+    camera.canvas.width = videoWidth;
+    camera.canvas.height = videoHeight;
+<!--    const canvasContainer = document.querySelector('.canvas-wrapper');-->
+<!--    canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`;-->
+
+    // Because the image from camera is mirrored, need to flip horizontally.
+    camera.ctx.translate(camera.video.videoWidth, 0);
+    camera.ctx.scale(-1, 1);
+
+    return camera;
+  }
+
+  drawCtx() {
+    this.ctx.drawImage(
+      this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
+  }
+
+  clearCtx() {
+    this.ctx.clearRect(0, 0, this.video.videoWidth, this.video.videoHeight);
+  }
+
+  drawResults(hands) {
+    // Sort by right to left hands.
+    hands.sort((hand1, hand2) => {
+      if (hand1.handedness < hand2.handedness) return 1;
+      if (hand1.handedness > hand2.handedness) return -1;
+      return 0;
+    });
+
+    // Pad hands to clear empty scatter GL plots.
+    while (hands.length < 2) hands.push({});
+
+    for (let i = 0; i < hands.length; ++i) {
+
+      this.drawResult(hands[i]);
+    }
+  }
+
+
+  drawResult(hand) {
+    if (hand.keypoints != null) {
+      this.drawKeypoints(hand.keypoints, hand.handedness);
+      const emo_type = this.drawEmoticon(hand.keypoints);
+
+      if (emo_type == test3) {
+        emo.innerHTML = '<figure contenteditable="false" data-ke-type="emoticon" data-ke-align="alignCenter" data-emoticon-type="friends1" data-emoticon-name="032" data-emoticon-isanimation="false" data-emoticon-src="/static/정답.jpg"><img src="/static/정답.jpg" width="300" /></figure>';
+      }
+      else {
+        emo.innerHTML = '<figure contenteditable="false" data-ke-type="emoticon" data-ke-align="alignCenter" data-emoticon-type="niniz" data-emoticon-name="029" data-emoticon-isanimation="false" data-emoticon-src="/static/오답.jpg"><img src="/static/오답.jpg" width="300" /></figure>'
+      }
+    }
+  }
+
+  drawEmoticon(keypoints) {
+    const keypointsArray = keypoints;
+    const thumb_tip = keypointsArray[4].y;
+    const index_finger_pip = keypointsArray[6].y;
+    const index_finger_tip = keypointsArray[8].y;
+    const middle_finger_pip = keypointsArray[10].y;
+    const middle_finger_tip = keypointsArray[12].y;
+    const ring_finger_pip = keypointsArray[14].y;
+    const ring_finger_tip = keypointsArray[16].y;
+    const pinky_tip = keypointsArray[20].y;
+
+
+
+    if (index_finger_pip > index_finger_tip
+      && middle_finger_pip > middle_finger_tip
+      && ring_finger_pip < ring_finger_tip
+      && thumb_tip > ring_finger_pip
+      && pinky_tip > thumb_tip){
+      return this.is_scissor_or_paper(keypoints, true)
+      }
+    else if (thumb_tip > index_finger_tip
+      && index_finger_tip > middle_finger_tip
+      && middle_finger_tip < ring_finger_tip
+      && ring_finger_tip < pinky_tip
+      && thumb_tip > pinky_tip){
+      return this.is_scissor_or_paper(keypoints, false)
+    }
+    else {
+      return 'none'
+    }
+  }
+
+  is_scissor_or_paper(keypoints, is_scissor) {
+    const keypointsArray = keypoints;
+    // for x axis
+    const wrist = keypointsArray[0].x;
+    const thumb_ip = keypointsArray[2].x;
+    const thumb_tip = keypointsArray[4].x;
+    const index_finger_mcp = keypointsArray[5].x;
+    const middle_finger_mcp = keypointsArray[9].x;
+    const ring_finger_mcp = keypointsArray[13].x;
+    const pinky_mcp = keypointsArray[17].x;
+
+
+
+    if (
+      (wrist > thumb_tip
+        && thumb_tip > index_finger_mcp
+        && index_finger_mcp < middle_finger_mcp
+        && middle_finger_mcp < ring_finger_mcp
+        && ring_finger_mcp < pinky_mcp)
+      || (wrist < thumb_tip
+	    && thumb_tip < index_finger_mcp
+        && index_finger_mcp > middle_finger_mcp
+        && middle_finger_mcp > ring_finger_mcp
+        && ring_finger_mcp > pinky_mcp)
+      ||(wrist > thumb_tip
+        && thumb_tip < index_finger_mcp
+        && index_finger_mcp < middle_finger_mcp
+        && middle_finger_mcp < ring_finger_mcp
+        && ring_finger_mcp < pinky_mcp)
+      || (wrist < thumb_tip
+	  && thumb_tip > index_finger_mcp
+        && index_finger_mcp > middle_finger_mcp
+        && middle_finger_mcp > ring_finger_mcp
+        && ring_finger_mcp > pinky_mcp)) {
+      if (is_scissor == true) {
+        return 'scissor'
+      }
+      else{
+        return 'paper'
+      }
+    }
+    else {
+      return 'none'
+    }
+  }
+
+
+  drawKeypoints(keypoints, handedness) {
+    const keypointsArray = keypoints;
+    this.ctx.fillStyle = handedness === 'Left' ? 'Red' : 'Blue';
+    this.ctx.strokeStyle = 'White';
+    this.ctx.lineWidth = 2;
+
+    for (let i = 0; i < keypointsArray.length; i++) {
+      const y = keypointsArray[i].x;
+      const x = keypointsArray[i].y;
+      this.drawPoint(x - 2, y - 2, 3);
+    }
+
+    const fingers = Object.keys(fingerLookupIndices);
+    for (let i = 0; i < fingers.length; i++) {
+      const finger = fingers[i];
+      const points = fingerLookupIndices[finger].map(idx => keypoints[idx]);
+      this.drawPath(points, false);
+    }
+  }
+
+  drawPath(points, closePath) {
+    const region = new Path2D();
+    region.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length; i++) {
+      const point = points[i];
+      region.lineTo(point.x, point.y);
+    }
+
+    if (closePath) {
+      region.closePath();
+    }
+    this.ctx.stroke(region);
+  }
+
+  drawPoint(y, x, r) {
+    this.ctx.beginPath();
+    this.ctx.arc(x, y, r, 0, 2 * Math.PI);
+    this.ctx.fill();
+  }
+
+
+}
+
+async function createDetector() {
+  const hands = handPoseDetection.SupportedModels.MediaPipeHands;
+
+  return handPoseDetection.createDetector(hands, {
+    runtime: 'tfjs',
+    modelType: 'full', //or lite
+    maxHands: 1, // or 2~10
+  })
+
+}
+
+
+async function renderResult() {
+  if (camera.video.readyState < 2) {
+    await new Promise((resolve) => {
+      camera.video.onloadeddata = () => {
+        resolve(video);
+      };
+    });
+  }
+
+  let hands = null;
+
+  if (detector != null) {
+
+    try {
+      hands = await detector.estimateHands(
+        camera.video,
+        { flipHorizontal: false });
+    } catch (error) {
+      detector.dispose();
+      detector = null;
+      alert(error);
+    }
+  }
+
+  camera.drawCtx();
+
+  if (hands && hands.length > 0) {
+    camera.drawResults(hands);
+  }
+}
+
+async function renderPrediction() {
+  await renderResult();
+
+  rafId = requestAnimationFrame(renderPrediction);
+};
+
+async function app() {
+
+  camera = await Camera.setupCamera();
+  console.log(tf.getBackend());
+  detector = await createDetector();
+  console.log(tf.getBackend());
+  renderPrediction();
+};
+
+app();
+
+
+
+</script>
+</div>
+{% endblock %}

@@ -1,0 +1,373 @@
+{% extends 'index_nav_diary.html' %}
+{% block content %}
+<style>
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 60px;
+  }
+
+  td {
+    text-align: left;
+  }
+
+  mark{
+  background: linear-gradient(to top, yellow 90%, transparent 50%);
+  }
+
+</style>
+<head><link href="/static/style_diary.css" rel="stylesheet"/></head>
+<!-- Masthead-->
+<!--<header>-->
+<!--    <div class="container">-->
+<!--&lt;!&ndash;        <div class="masthead-subheading">Welcome To Our Studio!</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>&ndash;&gt;-->
+<!--    </div>-->
+<!--</header>-->
+
+<!-- Button_zip-->
+<!--<div class="btn_zip">-->
+<!--    <input class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--           style="color:black; line-height: 13px; margin-bottom: 10px;"-->
+<!--           type="button"-->
+<!--           value="올려보기" onclick="upScroll()">-->
+<!--    <input class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--           style="color:black; line-height: 13px; margin-bottom: 10px;"-->
+<!--           type="button" value="내려보기" onclick="downScroll()">-->
+<!--    <form id="upload-form" method="POST" enctype="multipart/form-data">-->
+<!--        {% csrf_token %}-->
+<!--&lt;!&ndash;        <button id="upload-button" class="text-center btn btn-primary btn-xl text-uppercase"&ndash;&gt;-->
+<!--&lt;!&ndash;                style="color:black; line-height: 13px; margin-bottom: 10px;"&ndash;&gt;-->
+<!--&lt;!&ndash;                type="submit">확인하기&ndash;&gt;-->
+<!--&lt;!&ndash;        </button>&ndash;&gt;-->
+<!--            <input id="upload-button" class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--           style="color:black; line-height: 13px; margin-bottom: 10px;"-->
+<!--           type="submit" value="글씨 확인하기">-->
+<!--    </form>-->
+<!--    <a class="text-center btn btn-primary btn-xl text-uppercase"-->
+<!--       style="color:black; line-height: 13px; margin-bottom: 10px;" href="{% url 'main:diary_result' %}">다 썼어요</a>-->
+<div style="margin-bottom: 10px; position: relative;">
+    <button class="jsColor fixed-color controls__colors" id="jsMode"
+            style="background-color: black; float: left; display:none;  color:white; z-index: 1;">
+        연필
+    </button>
+    <button class="jsColor fixed-color controls__colors" id="jsMode1"
+            style="background-color: white; float: left; z-index: 1;">지우개
+    </button>
+</div>
+<form action="{% url 'main:word_trans' %}">
+    <button id="upload-button2" type="submit" style="display:none">Upload2</button>
+</form>
+<!--</div>-->
+
+<!--        일기장-->
+<section class="page-section" id="diary" style="padding: 3rem;">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-heading text-uppercase">일기쓰기</h2>
+            <h3 class="section-subheading text-muted">오늘 어떤 일이 있었나요?</h3>
+        </div>
+        <div class="canvas-container  d-flex justify-content-center align-items-center">
+            <canvas id="jsCanvas" class="canvas"></canvas>
+            <canvas id="canvas_top" class="canvas_top"></canvas>
+        </div>
+        <div class="text-center">
+<!--            <h2 class="section-heading text-uppercase">-</h2>-->
+<!--            <h3 class="section-subheading text-muted">-</h3>-->
+            <br><br><br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio" style="display:none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <!-- Portfolio item 6-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6" id="contact_diary2">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio/6.jpg" alt="..."/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Window</div>
+                        <div class="portfolio-caption-subheading text-muted">Photography</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--&lt;!&ndash; Portfolio Modals&ndash;&gt;-->
+<!--<div class="portfolio-modal modal" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true" style="width: 800px; height: 390px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 20%);">-->
+<!--    <div class="modal-dialog">-->
+<!--        <div class="modal-content">-->
+<!--            <div class="container">-->
+<!--                <div class="row justify-content-center">-->
+<!--                    <div class="col-lg-8">-->
+<!--                        <div class="modal-body">-->
+<!--                            &lt;!&ndash; Project details&ndash;&gt;-->
+<!--                            <h2 class="text-uppercase">{{result}}</h2>-->
+<!--                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button" id="contact_word2" style="display: none;">-->
+<!--                                <i class="fas fa-xmark me-1"></i>-->
+<!--                                Close Project-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!-- Portfolio item 6 modal popup-->
+<div class="portfolio-modal modal" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true" style="width: 800px; height: 800px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="close-modal" data-bs-dismiss="modal"><img src="/static/assets/img/close-icon.svg"
+                                                                          alt="Close modal"/></div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h2 class="text-uppercase">일기가 잘못 됐어요</h2>
+<!--                        <p class="item-intro text-muted">온점을 안썼을 수도 있어요.</p>-->
+                        <table>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>①</h3>
+                                        </td>
+                                        <td>
+                                            <h3>문장을 다 쓰면 <mark>온점(" . ")</mark>을 꼭 찍어주세요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>②</h3>
+                                        </td>
+                                        <td>
+                                            <h3>일기를 다 썼다면 <mark>글씨 확인하기</mark>를 눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <h3>③</h3>
+                                        </td>
+                                        <td>
+                                            <h3>일기를 기록하려면 <mark>다 썼어요</mark>를 <br>눌러주세요.</h3>
+                                        </td>
+                                    </tr>
+                                </table>
+                    </div>
+
+                </div>
+<!--                    <div class="row">-->
+<!--                            <div class="col-6">-->
+<!--                                <table>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <p>일기를 써봅시다</p>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <p>손으로 일기를 써봐요</p>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td>-->
+<!--                                            <p>다 쓰면 온점을 써요</p>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--&lt;!&ndash;                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button" id="contact_diary3">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <i class="fas fa-xmark me-1"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                                Close Project&ndash;&gt;-->
+<!--&lt;!&ndash;                            </button>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/static/js/scripts.js"></script>
+<script src="/static/app.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script>
+  function uploadImageToServer(imageData, canvasTopData) {
+    var formData = new FormData();
+    formData.append('image_data', imageData);
+    formData.append('canvas_top_data', canvasTopData);
+
+    $.ajax({
+      url: '/main/upload_diary/',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      beforeSend: function(xhr, settings) {
+        // CSRF 토큰 설정
+        xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+      },
+      success: function(response) {
+        console.log("성공")
+      },
+      error: function(xhr, status, error) {
+        console.log("실패")
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();  // 기본 동작(폼 전송) 방지
+      var canvas = document.getElementById('jsCanvas');
+      var context = canvas.getContext('2d');
+      var imageData = canvas.toDataURL('image/jfif');
+
+      var canvasTop = document.getElementById('canvas_top');
+      var contextTop = canvasTop.getContext('2d');
+      var canvasTopData = canvasTop.toDataURL('image/jfif');
+
+      // 이미지 데이터 서버로 전송
+      uploadImageToServer(imageData, canvasTopData);
+    });
+  });
+
+</script>
+<script type="text/javascript">
+    const uploadButton = document.querySelector('#upload-button');
+    const uploadButton2 = document.querySelector('#upload-button2');
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const uploadButton = document.querySelector('#upload-button');
+      const uploadButton2 = document.querySelector('#upload-button2');
+
+      uploadButton.addEventListener('click', () => {
+        setTimeout(() => {
+          uploadButton2.click();
+        }, 100);
+      });
+    });
+
+</script>
+<script type="text/javascript">
+        window.onload = function(){
+            const ctx_top = document.getElementById("canvas_top").getContext("2d");
+            const ctx = document.getElementById("jsCanvas").getContext("2d");
+            var img = new Image();
+            img.src = "{{trans.image_html_path}}";
+            console.log(img.src);
+            img.onload = function(){
+                ctx.drawImage(img, 0,0, 1210, 1210);
+            };
+            setTimeout(function() {
+                document.getElementById('contact_diary2').click();
+            }, 1000);
+
+            function scrollDown() {
+                window.scrollBy(0, 1);
+            }
+            scrollDown();
+
+            let str = "{{ trans.model_text }}";
+            console.log(str)
+            let arr = str.split("");
+            console.log(arr)
+            var x = 30;
+            var y = 30;
+
+            ctx_top.font = "90px Gamja Flower";
+            ctx_top.textBaseline = "top";
+            ctx_top.fillStyle = "black";
+            ctx_top.textAlign = "left";
+            for(let i = 0; i < arr.length; i++){
+                if(i == 10){y = y+120; x = 30;}
+                if(i == 20){y = y+120; x = 30;}
+                if(i == 30){y = y+120; x = 30;}
+                if(i == 40){y = y+120; x = 30;}
+                if(i == 50){y = y+120; x = 30;}
+                if(i == 60){y = y+120; x = 30;}
+                if(i == 70){y = y+120; x = 30;}
+                if(i == 80){y = y+120; x = 30;}
+                if(i == 90){y = y+120; x = 30;}
+                ctx_top.fillText(arr[i],x,y);
+                x = x+120;
+            }
+        }
+
+        function downScroll() {
+            var winY = window.pageYOffset;
+            window.scrollTo({top:winY+300, behavior: 'smooth'});
+            console.log(winY);
+        }
+
+        function upScroll() {
+          var winY = window.pageYOffset;
+
+          if (winY > 1) {
+            window.scrollTo({top:winY-300, behavior: 'smooth'});
+          }
+}
+
+
+</script>
+<script>
+// 드래그 앤 드롭 기능 구현
+var dragItems = document.querySelectorAll('.controls__colors');
+var isDragging = false;
+
+// 버튼 요소에 대해 이벤트 리스너 등록
+dragItems.forEach(function(dragItem) {
+  dragItem.addEventListener('mousedown', function(e) {
+    e.preventDefault();
+    var initialX = e.clientX - dragItem.offsetLeft;
+    var initialY = e.clientY - dragItem.offsetTop;
+
+    isDragging = true;
+
+    // 마우스 이동 이벤트 리스너
+    document.addEventListener('mousemove', moveItem);
+
+    // 마우스 업 이벤트 리스너
+    document.addEventListener('mouseup', function() {
+      document.removeEventListener('mousemove', moveItem);
+      isDragging = false;
+    });
+
+    // 요소 이동 함수
+    function moveItem(e) {
+      if (!isDragging) return;
+
+      var newX = e.clientX - initialX;
+      var newY = e.clientY - initialY;
+
+      // 모든 버튼 요소들의 위치 설정
+      dragItems.forEach(function(item) {
+        item.style.left = newX + 'px';
+        item.style.top = newY + 'px';
+      });
+    }
+  });
+});
+</script>
+</body>
+</html>
+{% endblock %}

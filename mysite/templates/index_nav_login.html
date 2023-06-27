@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    .fixed-button {
+        position: fixed;
+        bottom: 100px;
+        right: 40px;
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+    }
+
+        .fixed-color {
+        position: fixed;
+        bottom: 230px;
+        right: 40px;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 100px;
+        cursor: pointer;
+    }
+</style>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>CMNAI</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/static/assets/favicon.ico"/>
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+<!--    <link href="/static/style_diary.css" rel="stylesheet"/>-->
+    <link href="/static/css/styles.css" rel="stylesheet"/>
+
+</head>
+<body id="page-top">
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-bottom navbar-shrink" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand" href="/"><img src="/static/assets/img/CMNAI2.png" alt="..."/></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars ms-1"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0" style="display: flex; gap: 10px;">
+                <input class="web-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                       style="color:black; line-height: 13px; margin-bottom: 10px;"
+                       type="button"
+                       value="올려보기">
+                <input class="web-scroll-btn text-center btn btn-primary btn-xl text-uppercase"
+                       style="color:black; line-height: 13px; margin-bottom: 10px; margin-right:60px;"
+                       type="button" value="내려보기">
+                {% if request.resolver_match.url_name != 'signup'%}
+                <a class="text-center btn btn-primary btn-xl text-uppercase" style="color:black; line-height: 13px; margin-bottom: 10px;" href="#portfolio_move">놀이터</a>
+                <a class="text-center btn btn-primary btn-xl text-uppercase" style="color:black; line-height: 13px; margin-bottom: 10px;" href="#services_move">활용기술</a>
+                <a class="text-center btn btn-primary btn-xl text-uppercase" style="color:black; line-height: 13px; margin-bottom: 10px;" href="#team_move">노화방지턱</a>
+                {% endif %}
+                {% if not user.is_authenticated %}
+                {% if request.resolver_match.url_name == 'signup'%}
+                <a class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px; margin-left:60px; display: none;" href="#contact_move">시작하기</a>
+                {% else%}
+                <a class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px; margin-left:60px;" href="#contact_move">시작하기</a>
+                {% endif %}
+                {% endif %}
+                {% if user.is_authenticated %}
+                <a class="text-center btn btn-primary btn-xl text-uppercase"
+                   style="color:black; line-height: 13px; margin-bottom: 10px; margin-left:60px;"
+                   href="{% url 'main:logout' %}">그만하기</a>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<button class="fixed-button" onclick="scrollToTop()">위로</button>
+<!--<script>-->
+<!--    function scrollToTop() {-->
+<!--        window.scrollTo({-->
+<!--            top: 0,-->
+<!--            behavior: 'smooth'-->
+<!--        });-->
+<!--    }-->
+<!--            function downScroll() {-->
+<!--            event.stopPropagation();-->
+<!--            var winY = window.pageYOffset;-->
+<!--            window.scrollTo({top:winY+300, behavior: 'smooth'});-->
+<!--        }-->
+
+
+<!--        function upScroll() {-->
+<!--        event.stopPropagation();-->
+<!--          var winY = window.pageYOffset;-->
+
+<!--          if (winY > 1) {-->
+<!--            window.scrollTo({top:winY-300, behavior: 'smooth'});-->
+<!--          }-->
+<!--}-->
+<!--document.getElementById('upButton').addEventListener('click', upScroll);-->
+<!--document.getElementById('downButton').addEventListener('click', downScroll);-->
+<!--</script>-->
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+// 웹 화면용 스크롤 버튼 동작
+var webScrollButtons = document.getElementsByClassName('web-scroll-btn');
+for (var i = 0; i < webScrollButtons.length; i++) {
+    webScrollButtons[i].addEventListener('click', webScroll);
+}
+
+function webScroll(event) {
+    event.stopPropagation();
+    var winY = window.pageYOffset;
+    if (event.target.value === '올려보기') {
+        window.scrollTo({top: winY - 300, behavior: 'smooth'});
+    } else if (event.target.value === '내려보기') {
+        window.scrollTo({top: winY + 300, behavior: 'smooth'});
+    }
+}
+
+
+
+window.addEventListener('DOMContentLoaded', function() {
+  var popupScrollButtons = document.querySelectorAll('#portfolioModal2 .popup-scroll-btn');
+  for (var j = 0; j < popupScrollButtons.length; j++) {
+    popupScrollButtons[j].addEventListener('click', function(event) {
+      event.stopPropagation();
+      var modal = document.querySelector('#portfolioModal2');
+      var modalScrollTop = modal.scrollTop;
+      if (event.target.value === '올려보기') {
+      console.log("올렸다")
+        modal.scrollTo({top: modalScrollTop - 300, behavior: 'smooth'});
+        console.log("올렸다")
+      } else if (event.target.value === '내려보기') {
+      console.log("내렸다")
+        modal.scrollTo({top: modalScrollTop + 300, behavior: 'smooth'});
+        console.log("내렸다")
+      }
+    });
+  }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  var popupScrollButtons = document.querySelectorAll('#portfolioModal1 .popup-scroll-btn');
+  for (var j = 0; j < popupScrollButtons.length; j++) {
+    popupScrollButtons[j].addEventListener('click', function(event) {
+      event.stopPropagation();
+      var modal = document.querySelector('#portfolioModal1');
+      var modalScrollTop = modal.scrollTop;
+      if (event.target.value === '올려보기') {
+      console.log("올렸다")
+        modal.scrollTo({top: modalScrollTop - 300, behavior: 'smooth'});
+        console.log("올렸다")
+      } else if (event.target.value === '내려보기') {
+      console.log("내렸다")
+        modal.scrollTo({top: modalScrollTop + 300, behavior: 'smooth'});
+        console.log("내렸다")
+      }
+    });
+  }
+});
+window.addEventListener('DOMContentLoaded', function() {
+  var popupScrollButtons = document.querySelectorAll('#portfolioModal3 .popup-scroll-btn');
+  for (var j = 0; j < popupScrollButtons.length; j++) {
+    popupScrollButtons[j].addEventListener('click', function(event) {
+      event.stopPropagation();
+      var modal = document.querySelector('#portfolioModal3');
+      var modalScrollTop = modal.scrollTop;
+      if (event.target.value === '올려보기') {
+      console.log("올렸다")
+        modal.scrollTo({top: modalScrollTop - 300, behavior: 'smooth'});
+        console.log("올렸다")
+      } else if (event.target.value === '내려보기') {
+      console.log("내렸다")
+        modal.scrollTo({top: modalScrollTop + 300, behavior: 'smooth'});
+        console.log("내렸다")
+      }
+    });
+  }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+  var popupScrollButtons = document.querySelectorAll('#portfolioModal4 .popup-scroll-btn');
+  for (var j = 0; j < popupScrollButtons.length; j++) {
+    popupScrollButtons[j].addEventListener('click', function(event) {
+      event.stopPropagation();
+      var modal = document.querySelector('#portfolioModal4');
+      var modalScrollTop = modal.scrollTop;
+      if (event.target.value === '올려보기') {
+      console.log("올렸다")
+        modal.scrollTo({top: modalScrollTop - 300, behavior: 'smooth'});
+        console.log("올렸다")
+      } else if (event.target.value === '내려보기') {
+      console.log("내렸다")
+        modal.scrollTo({top: modalScrollTop + 300, behavior: 'smooth'});
+        console.log("내렸다")
+      }
+    });
+  }
+});
+
+
+</script>
+
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

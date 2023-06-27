@@ -1,0 +1,367 @@
+{% extends 'index_nav.html' %}
+{% load final_filter %}
+{% block content %}
+<head><link href="/static/style_mypage.css" rel="stylesheet"/></head>
+<style>
+    .pagination li {
+        width: 50px;
+        height: 50px;
+    }
+
+      .pagination .page-item.active .page-link {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+      .page-item a {
+        text-align: center;
+    }
+</style>
+
+<!-- Masthead-->
+<!--<header class="masthead">-->
+<!--    <div class="container">-->
+<!--        <br><br><br><br><br><br>-->
+<!--        <div class="masthead-subheading">Welcome To Our Studio!</div>-->
+<!--        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>-->
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#contact">Tell Me More</a>-->
+<!--    </div>-->
+<!--        <div class="text-center">-->
+<!--        <br><br><br><br><br><br><br><br>-->
+<!--    </div>-->
+<!--</header>-->
+
+
+<!-- Services-->
+<section class="page-section bg-light" id="diary">
+    <div class="container" id="emotion_move">
+
+        <div class="row text-center">
+            <link rel="stylesheet" type="text/css" href="/static/calender.css">
+            <div class="calendar">
+                <div class="header" style="margin-bottom: 50px;">
+                    <div class="text-center">
+                        <h1 class="section-heading text-uppercase">감정 달력</h1>
+                    </div>
+                    <div class="year-month text-center">
+
+                    </div>
+                    <div class="nav" style="float:right;">
+                        <button class="nav-btn go-prev" onclick="prevMonth()"
+                                Style="width:50px; height:50px; font-size: 30px; ">⬅︎
+                        </button>
+                        <button class="nav-btn go-today" onclick="goToday()"
+                                Style="width:80px; height:50px; font-size: 30px !important; line-height: 1.4;">오늘
+                        </button>
+                        <button class="nav-btn go-next" onclick="nextMonth()"
+                                Style="width:50px; height:50px; font-size: 30px;">➡
+                        </button>
+                    </div>
+                </div>
+                <div class="main">
+                    <div class="days">
+                        <div class="day"><h2>일</h2></div>
+                        <div class="day"><h2>월</h2></div>
+                        <div class="day"><h2>화</h2></div>
+                        <div class="day"><h2>수</h2></div>
+                        <div class="day"><h2>목</h2></div>
+                        <div class="day"><h2>금</h2></div>
+                        <div class="day"><h2>토</h2></div>
+                    </div>
+                    <div class="dates" style="height:530px;"></div>
+                </div>
+<!--                <img src="/static/calen.png" alt="Calendar"-->
+<!--                     style="position: absolute; bottom: 960px; left: 50px; width: 1800px; height: 1100px;">-->
+<!--                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 35%; z-index: -1;">-->
+<!--                    <img src="/static/calen.png" alt="Calendar" style=" z-index: -1; width: 100%; height: 100%;">-->
+<!--                </div>-->
+            </div>
+        </div>
+        <div class="legend">
+            <table style="font-size:20px;">
+                <tr>
+                    <td>
+                        <div style="background-color:#7E7474E0; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">불안</td>
+                    <td>
+                        <div style="background-color:#F18746F7; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">당황</td>
+                    <td>
+                        <div style="background-color:#6397E7FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">슬픔</td>
+
+                    <td>
+                        <div style="background-color:#EE6060FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">분노</td>
+                    <td>
+                        <div style="background-color:#8BC065FF; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">상처</td>
+
+                    <td>
+                        <div style="background-color:#F8F05AF7; width:50px; height:50px; border-radius: 36px; margin:8px 15px 8px 15px;"></div>
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">기쁨</td>
+                </tr>
+            </table>
+            <br><br><br><br><br><br><br><br>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio Grid-->
+        <section class="page-section" id="word_score">
+            <div class="container">
+                <div class="text-center" id="score_move">
+                    <h2 class="section-heading text-uppercase">초성 퀴즈 목록</h2>
+               </div>
+                <div class="row" style="margin: 80px;">
+                  <!-- Portfolio item 1-->
+                    <div class="table-responsive" style="height: 570px;">
+                          <table class="table custom-table" >
+                              <thead>
+                              <tr>
+                                <th scope="col" style="text-align: center; vertical-align: middle; width: 100px; font-size:20px;">번호</th>
+                                <th scope="col" style="text-align: center; vertical-align: middle; width: 400px; font-size:20px;">주제</th>
+                                <th scope="col" style="text-align: center; vertical-align: middle; width: 400px; font-size:20px;">날짜</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              {% if obj_list %}
+                              {% for obj in obj_list %}
+                              <tr scope="row" class="text-center">
+                                  <td style="display: block; text-align: center; font-size:25px; margin:0 auto;">
+                                      <!-- 번호 = 전체건수 - 시작인덱스 - 현재인덱스 + 1 -->
+                                      <b>{{ obj_list.paginator.count|sub:obj_list.start_index|sub:forloop.counter0|add:1 }}</b>
+                                  </td>
+                                  <td class="text-start">
+                                      <a href="{% url 'main:word_detail' obj.id %}" style="display: block; text-align: center; font-size:25px; margin:10px;"><h3>{{ obj.category }} 초성 퀴즈</h3></a>
+                                  </td>
+                                  <td style="display: block; text-align: center; font-size:25px; margin:10px;"><b>{{ obj.create_date }}</b></td>
+                              </tr>
+                              {% endfor %}
+                              {% else %}
+                              <td colspan="4" style="text-align: center;"><h2>초성퀴즈 내역이 없습니다.</td>
+                              {% endif %}
+                              </tbody>
+                          </table>
+                    </div>
+                    <div class="row" style="margin-top: 15px;">
+                    <!-- 페이징처리 시작 -->
+                        <ul class="pagination justify-content-center">
+                            {% for page_number in obj_list.paginator.page_range %}
+                            {% if page_number == obj_list.number %}
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                            </li>
+                            {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                        </ul>
+                    <!-- 페이징처리 끝 -->
+                    </div>
+                </div>
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br>
+        </section>
+
+
+
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/static/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!--<script src="/static/app_word.js"></script>-->
+<!--<script src="/static/app_word_bot.js"></script>-->
+  <script>
+    var liter = JSON.parse("{{ context_json|escapejs }}");
+      var model_test = new Array();
+      for (var i=0; i<liter.length; i++)
+      {
+         var mood_set = [];
+         var before_date = liter[i].date
+         mood_set[0] = parseInt(before_date.split('-')[0])
+         mood_set[1] = parseInt(before_date.split('-')[1])
+         mood_set[2] = parseInt(before_date.split('-')[2].split(' ')[0])
+         mood_set[3] = liter[i].color
+         mood_set[4] = liter[i].id
+
+         model_test.push(mood_set)
+         console.log(before_date)
+      }
+
+
+<!--    for(var i=0; i<model_test.length; i++){-->
+<!--        console.log(model_test[i][0], model_test[i][1],model_test[i][2],model_test[i][3]);-->
+<!--    }-->
+
+let date = new Date();
+
+const renderCalender = () => {
+  const viewYear = date.getFullYear();
+  const viewMonth = date.getMonth();
+
+  document.querySelector('.year-month').textContent = `${viewYear}년 ${viewMonth + 1}월`;
+
+  const prevLast = new Date(viewYear, viewMonth, 0);
+  const thisLast = new Date(viewYear, viewMonth + 1, 0);
+
+  const PLDate = prevLast.getDate();
+  const PLDay = prevLast.getDay();
+
+  const TLDate = thisLast.getDate();
+  const TLDay = thisLast.getDay();
+
+  const prevDates = [];
+  const thisDates = [...Array(TLDate + 1).keys()].slice(1);
+  const nextDates = [];
+
+  const date_info = new Array();
+  for(let j=0; j<model_test.length; j++){
+    var tmp_date_info=[];
+    if(model_test[j][0]==viewYear&&model_test[j][1]==viewMonth+1){
+    tmp_date_info[0]= model_test[j][2];
+    tmp_date_info[1]= model_test[j][3];
+    tmp_date_info[2]= model_test[j][4];
+    date_info.push(tmp_date_info);
+           }
+        }
+
+  if (PLDay !== 6) {
+    for (let i = 0; i < PLDay + 1; i++) {
+      prevDates.unshift(PLDate - i);
+    }
+  }
+
+  for (let i = 1; i < 7 - TLDay; i++) {
+    nextDates.push(i);
+  }
+
+  const dates = prevDates.concat(thisDates, nextDates);
+  const firstDateIndex = dates.indexOf(1);
+  const lastDateIndex = dates.lastIndexOf(TLDate);
+
+  dates.forEach((date, i) => {
+    const condition = i >= firstDateIndex && i < lastDateIndex + 1
+                      ? 'this'
+                      : 'other';
+
+    if(condition=='other'){
+      dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+<!--      console.log(dates[i])-->
+      }
+    else{
+        for(let j=0; j<date_info.length; j++){
+            if (dates[i]==parseInt(date_info[j][0])) {
+              var n = j
+              var a = 'y'
+<!--              console.log(dates[i], date_info[j][0],date_info[j][1])-->
+               }
+         }
+        if(a=='y'){
+          var mood_id = date_info[n][2]
+          var mood_color = date_info[n][1]
+
+          dates[i] = `<a href="/main/senti/${mood_id}" class="date ${condition}" style="background-color:${mood_color}">${date}</a>`;
+<!--          console.log(dates[i])-->
+          }
+          else{
+          dates[i] = `<div class="date"><span class=${condition}>${date}</span></div>`;
+<!--          console.log(dates[i])-->
+          }
+    }
+  });
+
+  document.querySelector('.dates').innerHTML = dates.join('');
+  const today = new Date();
+  if (viewMonth === today.getMonth() && viewYear === today.getFullYear()) {
+    for (let date of document.querySelectorAll('.this')) {
+      if (+date.innerText === today.getDate()) {
+        date.classList.add('today');
+        break;
+      }
+    }
+  }
+};
+
+renderCalender();
+
+const prevMonth = () => {
+  date.setMonth(date.getMonth() - 1);
+  renderCalender();
+};
+
+const nextMonth = () => {
+  date.setMonth(date.getMonth() + 1);
+  renderCalender();
+};
+
+const goToday = () => {
+  date = new Date();
+  renderCalender();
+};
+</script>
+<script>
+    $(document).ready(function() {
+        $('.pagination a').on('click', function(event) {
+            event.preventDefault(); // 링크 클릭 시 기본 동작을 취소합니다.
+            var url = $(this).attr('href'); // 클릭한 링크의 URL을 가져옵니다.
+            loadPage(url); // AJAX 요청을 보내고 데이터를 업데이트하는 함수를 호출합니다.
+        });
+    });
+
+    function loadPage(url) {
+        $.ajax({
+            url: url, // 요청할 URL
+            success: function(data) {
+                // AJAX 요청이 성공하면 응답 데이터를 처리합니다.
+                var tableBody = $(data).find('.custom-table tbody'); // 응답 데이터에서 게시글 테이블의 tbody를 찾습니다.
+                $('.custom-table tbody').replaceWith(tableBody); // 현재 페이지의 게시글 테이블 tbody를 새로운 데이터로 대체합니다.
+            }
+        });
+    }
+</script>
+<script>
+  $(document).ready(function() {
+    $('.pagination .page-item').on('click', function() {
+      $('.pagination .page-item').removeClass('active'); // 모든 페이지네이션 버튼에서 active 클래스 제거
+      $(this).addClass('active'); // 클릭한 페이지네이션 버튼에 active 클래스 추가
+    });
+  });
+</script>
+<script>
+            function downScroll() {
+            var winY = window.pageYOffset;
+            window.scrollTo({top:winY+300, behavior: 'smooth'});
+            console.log(winY);
+        }
+
+
+        function upScroll() {
+          var winY = window.pageYOffset;
+
+          if (winY > 1) {
+            window.scrollTo({top:winY-300, behavior: 'smooth'});
+          }
+}
+
+</script>
+</body>
+</html>
+{% endblock %}

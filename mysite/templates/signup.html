@@ -1,0 +1,325 @@
+{% extends 'index_nav_login.html' %}
+{% block content %}
+<style>
+     .feedback_right{
+    position: absolute;
+    top: 0;
+    left: 420px;
+    margin-top: 10px;
+}
+
+</style>
+<!-- Masthead-->
+<header>
+    <div class="container">
+<!--        <div class="masthead-subheading">Welcome To Our Studio!</div>-->
+<!--        <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>-->
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>-->
+    </div>
+</header>
+
+<section class="page-section bg-light">
+    <div class="text-center">
+        <h2 class="section-heading text-uppercase">회원가입</h2>
+        <h2 class="section-subheading text-muted">CMNAI에 오신 걸 환영합니다!</h2>
+        <br>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center">
+        <form id="contactForm" method="post" action="{% url 'main:signup' %}" style="width:800px; text-align: center;">
+            <div class="row align-items-stretch mb-5">
+                <div class="col-md-6">
+                    {% csrf_token %}
+
+                    <div class="form-floating mb-3" >
+                        <input type="text" class="form-control" name="username" id="username" placeholder=" "
+                               maxlength="4" style="margin-bottom: 50px;" oninput="restrictInput(event);"/>
+                        <label class="form-label" for="username">사용자 별명</label>
+                        <div class="valid-feedback feedback_right">
+                            <h3>사용가능한 별명 입니다.</h3>
+                        </div>
+                        <div class="invalid-feedback feedback_right">
+                            <h3>4글자 이하의<br>다른 별명을 사용해주세요.</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="realname" id="realname" placeholder=" "
+                               maxlength="4" style="margin-bottom: 50px;" oninput="restrictInput(event);"/>
+                        <label class="form-label" for="realname">사용자 이름</label>
+                        <div class="valid-feedback feedback_right">
+                            <h3>사용가능한 이름 입니다.</h3>
+                        </div>
+                        <div class="invalid-feedback feedback_right">
+                            <h3>4글자 이하로 작성해주세요.</h3>
+                        </div>
+                    </div>
+
+
+<!--                    <div class="form-floating mb-3">-->
+<!--                        <input type="text" class="form-control" name="family" id="family" placeholder=" " style="margin-bottom: 50px;"/>-->
+<!--                        <label class="form-label" for="family">보호자관계 (라디오버튼이나 체크박스로 바꿀까??)</label>-->
+<!--                        <div class="valid-feedback feedback_right">-->
+<!--                            <h3>사용가능한 보호자관계 입니다.</h3>-->
+<!--                        </div>-->
+<!--                        <div class="invalid-feedback feedback_right">-->
+<!--                            <h3>5글자 이상 10글자 이하로 작성해 주세요. 보호자관계!!</h3>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+                    <div class="form-floating mb-3">
+                        <select name="family" id="family" class="form-select form-control"
+                                style="margin-bottom: 50px;">
+                            <option value="select">----</option>
+                            <option value="배우자">배우자</option>
+                            <option value="자녀">자녀</option>
+                            <option value="친척">친척</option>
+                            <option value="친구">친구</option>
+                            <option value="의료 관계자">의료 관계자</option>
+                            <option value="요양 보호사">요양 보호사</option>
+                            <option value="프로그램 관리자">프로그램 관리자</option>
+                        </select>
+                        <label class="form-label" for="family">보호자관계</label>
+                        <div class="valid-feedback feedback_right valid_feedback_select">
+                            <h3>사용가능한 보호자관계 입니다.</h3>
+                        </div>
+                        <div class="invalid-feedback feedback_right invalid_feedback_select">
+                            <h3>보호자 관계를 선택해주세요.</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="family_phone_number" id="family_phone_number"
+                               placeholder=" " style="margin-bottom: 50px;"
+                               maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                               value="{{ form.password1.value|default_if_none:'010' }}"/>
+                        <label class="form-label" for="family_phone_number">보호자 연락처</label>
+                        <div class="valid-feedback feedback_right">
+                            <h3>올바른 보호자 연락처입니다.</h3>
+                        </div>
+                        <div class="invalid-feedback feedback_right">
+                            <h3>010으로 시작하는 번호만 이용하여 작성해주세요.</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="my_phone_number" id="my_phone_number"
+                               placeholder=" " style="margin-bottom: 50px;"
+                               maxlength="11" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                               value="{{ form.password1.value|default_if_none:'010' }}"/>
+                        <label class="form-label" for="my_phone_number">본인 연락처</label>
+                        <div class="valid-feedback feedback_right">
+                            <h3>올바른 본인 연락처입니다.</h3>
+                        </div>
+                        <div class="invalid-feedback feedback_right">
+                            <h3>010으로 시작하는 번호만 이용하여 작성해주세요.</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3" style="display:none">
+                        <input type="password" class="form-control" name="password1" id="password1"
+                               placeholder="비밀번호1 입력"
+                               value="{{ form.password1.value|default_if_none:'qwer1234!' }}"/>
+                        <label class="form-label" for="password1">비밀번호1</label>
+                        <div class="valid-feedback">
+                            사용가능한 비밀번호1 입니다.
+                        </div>
+                        <div class="invalid-feedback">
+                            5글자 이상 10글자 이하로 작성해 주세요. 비번1!!
+                        </div>
+                    </div>
+
+
+                    <div class="form-floating mb-3" style="display:none">
+                        <input type="password" class="form-control" name="password2" id="password2"
+                               placeholder="비밀번호2 입력"
+                               value="{{ form.password1.value|default_if_none:'qwer1234!' }}"/>
+                        <label class="form-label" for="password2">비밀번호2</label>
+                        <div class="valid-feedback">
+                            사용가능한 비밀번호2 입니다.
+                        </div>
+                        <div class="invalid-feedback">
+                            5글자 이상 10글자 이하로 작성해 주세요. 비번2!!
+                        </div>
+                    </div>
+                </div>
+                <button id="btn" type="submit" class="text-center btn btn-primary btn-xl text-uppercase" style="line-height: 13px; margin-bottom: 10px; height: 50px; width:430px; margin-left: 185px; color:black;">생성하기</button>
+        </form>
+    </div>
+    </div>
+</section>
+
+<!-- Portfolio Grid-->
+<section class="page-section bg-light" id="portfolio" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <!-- Portfolio item 6-->
+                <div class="portfolio-item">
+                    <a class="portfolio-link" data-bs-toggle="modal" href="#portfolioModal6" id="contact_word">
+                        <div class="portfolio-hover">
+                            <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="/static/assets/img/portfolio/6.jpg" alt="..."/>
+                    </a>
+                    <div class="portfolio-caption">
+                        <div class="portfolio-caption-heading">Window</div>
+                        <div class="portfolio-caption-subheading text-muted">Photography</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Portfolio item 6 modal popup-->
+<div class="portfolio-modal modal" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true" style="width: 1000px; height: 390px; position: fixed; top: 50%; left: 50%; transform: translate(-50%, 25%);">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="modal-body">
+                            <!-- Project details-->
+                            <h2 class="text-uppercase">올바른 값을 입력하세요.</h2>
+                            <button class="btn btn-primary btn-xl text-uppercase" data-bs-dismiss="modal" type="button" id="contact_word2" style="display: none;">
+                                <i class="fas fa-xmark me-1"></i>
+                                Close Project
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/static/js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+<script>
+   let isNickValid=false;
+   let isNameValid=false;
+   let isFamValid=false;
+   let isFamNumValid=false;
+   let isMyNumValid=false;
+
+
+    const connectColNickAll = JSON.parse('{{ connect_col_nick_all|escapejs }}');
+    console.log(connectColNickAll);
+
+    const nicknameInput = document.querySelector("#username");
+    const validFeedback = document.querySelector('.valid-feedback');
+    const invalidFeedback = document.querySelector('.invalid-feedback');
+    const invalidFeedbackDuplicate = document.querySelector('.invalid-feedback-duplicate');
+
+    nicknameInput.addEventListener("input", function() {
+        const inputNick = this.value;
+        isNickValid = inputNick.length > 0 && inputNick.length <= 4;
+
+        if (connectColNickAll.includes(inputNick)) {
+            this.classList.remove("is-valid");
+            this.classList.add("is-invalid");
+            isNickValid=false;
+        }
+
+        if (isNickValid) {
+            this.classList.remove("is-invalid");
+            this.classList.add("is-valid");
+        } else {
+            this.classList.remove("is-valid");
+            this.classList.add("is-invalid");
+        }
+
+
+    });
+
+      document.querySelector("#realname").addEventListener("input", function(){
+      let inputName=this.value;
+      isNameValid = inputName.length > 0 && inputName.length <= 4;
+      if(isNameValid){
+         this.classList.remove("is-invalid");
+         this.classList.add("is-valid");
+      }else{
+         this.classList.remove("is-valid");
+         this.classList.add("is-invalid");
+      }
+   });
+
+document.querySelector("#family").addEventListener("change", function() {
+  let selectedOption = this.value;
+  let validFeedbackElement = document.querySelector('.valid_feedback_select');
+  let feedbackSelectElement = document.querySelector('.invalid_feedback_select');
+
+  if (selectedOption === "select") {
+    validFeedbackElement.style.display = "none";
+    feedbackSelectElement.style.display = "block";
+    isFamValid=false;
+  } else {
+    validFeedbackElement.style.display = "block";
+    feedbackSelectElement.style.display = "none";
+    isFamValid=true;
+  }
+});
+
+            document.querySelector("#family_phone_number").addEventListener("input", function(){
+      let inputFamNum=this.value;
+      isFamNumValid = inputFamNum.length == 11 && inputFamNum.startsWith("010");
+      if(isFamNumValid){
+         this.classList.remove("is-invalid");
+         this.classList.add("is-valid");
+      }else{
+         this.classList.remove("is-valid");
+         this.classList.add("is-invalid");
+      }
+   });
+
+            document.querySelector("#my_phone_number").addEventListener("input", function(){
+      let inputMyNum=this.value;
+      isMyNumValid = inputMyNum.length == 11 && inputMyNum.startsWith("010");
+      if(isMyNumValid){
+         this.classList.remove("is-invalid");
+         this.classList.add("is-valid");
+      }else{
+         this.classList.remove("is-valid");
+         this.classList.add("is-invalid");
+      }
+   });
+
+const btnSubmit = document.querySelector("#btn");
+const contactWord = document.querySelector("#contact_word");
+const contactWord2 = document.querySelector("#contact_word2");
+
+btnSubmit.addEventListener("click", function(event) {
+    if (!isNickValid || !isNameValid || !isFamValid || !isFamNumValid || !isMyNumValid) {
+        event.preventDefault(); // 기본 동작 막기
+        contactWord.click();
+                setTimeout(function() {
+            contactWord2.click();
+        }, 2000);
+    }
+});
+
+function restrictInput(event) {
+  const input = event.target;
+  const inputValue = input.value;
+  const restrictedValue = inputValue.replace(/[^(ㄱ-ㅎ가-힣)]/g, '');
+  if (inputValue !== restrictedValue) {
+    input.value = restrictedValue;
+  }
+}
+</script>
+{% endblock %}
+

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+    <link rel="style_word" type="text/css" href="/static/style_word.css">
+    <div style="background-color: #EBECFA">
+        <p id="imo1;" style="font-size: 80px; position: fixed; top: 20%; left: 380px; text-align: center;">👆<br>가위</p>
+        <p id="imo2;" style="font-size: 80px; position: fixed; top: 20%; left: 610px; text-align: center;">✊<br>바위</p>
+        <p id="imo3;" style="font-size: 80px; position: fixed; top: 20%; left: 840px; text-align: center;">✋<br>보</p>
+        <p id="imo4;" style="font-size: 80px; position: fixed; top: 20%; left: 1000px; text-align: center;">✌️<br>김치</p>
+        <p id="imo5;" style="font-size: 80px; position: fixed; top: 50%; left: 380px; text-align: center;">🤙<br>전화</p>
+        <p id="imo6;" style="font-size: 80px; position: fixed; top: 50%; left: 560px; text-align: center;">👌<br>오케이</p>
+        <p id="imo7;" style="font-size: 80px; position: fixed; top: 50%; left: 820px; text-align: center;">🤘<br>여우</p>
+        <p id="imo8;" style="font-size: 80px; position: fixed; top: 50%; left: 1000px; text-align: center;">👍<br>최고</p>
+        <div><a id="q-btn" class="btn btn-primary" style="color:black; line-height: 75px; padding: 0px; position: absolute; top: 600px; left: 390px; font-size: 60px; border-width: medium; width: 800px; height: 80px; background-color:#EBECFA; border-color: #551E69; color: #551E69; " href="{% url 'main:hand' %}">자 이제 시작해볼까요?</a></div>
+    </div>
+    <script>
+        var qBtn = document.getElementById("q-btn");
+
+        const imo1 = document.querySelector('p:nth-child(1)');
+        const imo2 = document.querySelector('p:nth-child(2)');
+        const imo3 = document.querySelector('p:nth-child(3)');
+        const imo4 = document.querySelector('p:nth-child(4)');
+        const imo5 = document.querySelector('p:nth-child(5)');
+        const imo6 = document.querySelector('p:nth-child(6)');
+        const imo7 = document.querySelector('p:nth-child(7)');
+        const imo8 = document.querySelector('p:nth-child(8)');
+
+        qBtn.addEventListener("click", function() {
+            qBtn.innerHTML = "Q를 눌러 그만하기";
+            imo1.style.top = '20%';
+            imo1.style.left = '50px';
+            imo2.style.top = '20%';
+            imo2.style.left = '270px';
+            imo3.style.top = '20%';
+            imo3.style.right = '270px';
+            imo3.style.left = '';
+            imo4.style.top = '20%';
+            imo4.style.right = '50px';
+            imo4.style.left = '';
+            imo5.style.top = '50%';
+            imo5.style.left = '50px';
+            imo6.style.top = '50%';
+            imo6.style.left = '230px';
+            imo7.style.top = '50%';
+            imo7.style.right = '240px';
+            imo7.style.left = '';
+            imo8.style.top = '50%';
+            imo8.style.right = '50px';
+            imo8.style.left = '';
+
+
+        });
+    </script>
+{% endblock %}

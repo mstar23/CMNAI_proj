@@ -1,0 +1,113 @@
+/*
+.fade-in-out {
+  -webkit-animation: fadeInOut 1s;
+  animation: fadeInOut 1s;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+@-webkit-keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  to {
+    opacity: 1;
+  }
+}
+*/
+/*
+.player-container,
+.robot-container {
+  position: relative;
+}
+*/
+
+.player-container .player-video {
+  /*
+  display: block;
+  min-height: 298px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  width: 100%;
+  */
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+
+}
+
+/*
+.player-hand-container {
+  right: 0;
+  top: 0;
+*/
+/*.player-hand,
+.player-hand-container {
+  height: 100px;
+  position: absolute;
+  width: 100px;
+}
+*/
+/*
+.player-hand {
+  font-size: 42px;
+  line-height: 100px;
+  right: 1px;
+  text-align: center;
+  top: 2px;
+}
+*/
+/*
+.player-hand-zoom {
+  -webkit-animation: handZoom 0.5s;
+  animation: handZoom 0.5s;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+*/
+/*
+@-webkit-keyframes handZoom {
+  0% {
+    font-size: 42px;
+  }
+  50% {
+    font-size: 64px;
+  }
+  to {
+    font-size: 42px;
+  }
+}
+@keyframes handZoom {
+  0% {
+    font-size: 42px;
+  }
+  50% {
+    font-size: 64px;
+  }
+  to {
+    font-size: 42px;
+  }
+}
+*/
+/*
+.timer-ring-circle {
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  -webkit-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transition: stroke-dashoffset 0.1s;
+  transition: stroke-dashoffset 0.1s;
+}
+*/
