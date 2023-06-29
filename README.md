@@ -4,8 +4,8 @@
 
 <div align="center">
   <a href=https://youtu.be/-zNDuX9tTr8 target="_blank">
-<img width="1052" alt="스크린샷 2023-06-29 오후 2 58 08" src="https://github.com/mstar23/CMNAI_proj/assets/117613860/99e3340d-3865-4876-b276-a42533b5a8a7">
-</a>
+    <img width="1052" alt="스크린샷 2023-06-29 오후 2 58 08" src="https://github.com/mstar23/CMNAI_proj/assets/117613860/99e3340d-3865-4876-b276-a42533b5a8a7">
+  </a>
 </div>
 
 
