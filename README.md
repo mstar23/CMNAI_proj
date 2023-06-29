@@ -71,8 +71,9 @@
 --- 
 ## 👥Members
 <div align="center">
-  <img src="https://github.com/mstar23/CMNAI_proj/assets/117613860/a732e92e-5e46-4560-94d3-dab25cfb8928">
+  <img width="991" alt="스크린샷 2023-06-29 오후 2 38 51" src="https://github.com/mstar23/CMNAI_proj/assets/117613860/0b56eb78-13d3-4de2-a0bb-f0c8c940869a">
 </div>
+
 
 
 
