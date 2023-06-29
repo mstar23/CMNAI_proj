@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=000000&customColorList=10&height=350&section=header&text=CMNAI&fontSize=90&fontColor=FFBF00&desc=노인%20치매%20예방%20및%20재활%20프로그램&descSize=25&descAlignY=75)
+![header](https://capsule-render.vercel.app/api?type=waving&color=000000&customColorList=10&height=350&section=header&text=CMNAI&fontSize=90&fontColor=FFBF00&desc=노인을%20위한%20치매%20예방%20프로그램&descSize=25&descAlignY=75)
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 
