@@ -2,7 +2,9 @@
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 
-[![Video Label](http://img.youtube.com/vi/-zNDuX9tTr8/0.jpg)](https://youtu.be/-zNDuX9tTr8)
+
+
+[![Video Label](https://github.com/mstar23/CMNAI_proj/assets/117613860/ad4bd0e8-2688-47d4-a01a-a58897b2401c)](https://youtu.be/-zNDuX9tTr8)
 
 ---
 ## 🎈프로젝트 개요
