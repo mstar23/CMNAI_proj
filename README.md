@@ -2,8 +2,13 @@
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 ![메인페이지](https://github.com/mstar23/CMNAI_proj/assets/117613860/94cbfd44-6d45-48bf-a718-6fa6d4f07088)
-
-[구경하러 가기](https://youtu.be/-zNDuX9tTr8)
+<div align="center">
+ <h1>
+ <a href="https://youtu.be/-zNDuX9tTr8">
+  구경하러 가기
+ </a>
+ </h1>
+</div>
 
 ---
 ## 🎈프로젝트 개요
