@@ -1,9 +1,8 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=000000&customColorList=10&height=350&section=header&text=CMNAI&fontSize=90&fontColor=FFBF00&desc=노인을%20위한%20치매%20예방%20프로그램&descSize=25&descAlignY=75)
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
-<img width="1052" alt="스크린샷 2023-06-29 오후 2 58 08" src="https://github.com/mstar23/CMNAI_proj/assets/117613860/f511e5d4-d7a7-4216-9c9c-34265085d2de">
 
-[![CMNAI(https://github.com/mstar23/CMNAI_proj/assets/117613860/f511e5d4-d7a7-4216-9c9c-34265085d2de)]](https://youtu.be/-zNDuX9tTr8)
+[![CMNAI](https://github.com/mstar23/CMNAI_proj/assets/117613860/f511e5d4-d7a7-4216-9c9c-34265085d2de)](https://youtu.be/-zNDuX9tTr8)
 
 ---
 ## 🎈프로젝트 개요
