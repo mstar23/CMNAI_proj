@@ -1,14 +1,16 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=0&height=350&section=header&text=CMNAI&fontSize=90&desc=노인%20치매%20예방%20및%20재활%20프로그램&descSize=25&descAlignY=75)
 
-## 👴🏻프로젝트 소개👵🏻
-#### 뇌의 노화를 막기 위한 인지력 향상 프로그램
+## 👴🏻프로젝트 'CMNAI' 👵🏻
+#### 노인 치매 예방 보조프로그램
 
 노화방지턱의 CMNAI는 손글씨와 손운동을 통해 인지력 향상에 도움을 주는 프로그램입니다.<br>
 '손글씨'라는 아날로그적 방식으로 노년층은 보다 쉽게 프로그램에 접근할 수 있습니다.<br>
  동시에 디지털 방식의 데이터 누적으로 사용자의 인지력 변화를 추적할 수 있습니다.
+ 
+---
+## 기획의도
 
 ---
-
 ## ⚒️기술 스택
 <div align="center">
   <img src="https://img.shields.io/badge/pycharm-000000?style=for-the-badge&logo=pycharm&logoColor=white">
