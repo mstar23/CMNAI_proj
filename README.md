@@ -4,7 +4,7 @@
 
 <div align="center">
   <a href="https://youtu.be/-zNDuX9tTr8">
-    <img src="https://github.com/mstar23/CMNAI_proj/assets/117613860/8ac374cb-ab56-4460-9320-7d0067545e77">
+    <img src="https://img.shields.io/badge/pycharm-000000?style=for-the-badge&logo=pycharm&logoColor=white">
   </a>
 </div>
 
