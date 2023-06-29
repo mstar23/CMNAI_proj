@@ -5,7 +5,7 @@
 [![Video Label](http://img.youtube.com/vi/-zNDuX9tTr8/0.jpg)](https://youtu.be/-zNDuX9tTr8)
 
 ---
-## 프로젝트 개요
+## 🎈프로젝트 개요
 <div align="center">
  <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/7ffef492-b2c2-4e58-96f1-7233a8ff0488" width="500" height="300">
  <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/ee11e916-bd89-4ae8-bf79-4c4d9b292115" width="700">
