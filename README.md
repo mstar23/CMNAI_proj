@@ -1,11 +1,7 @@
 ![header](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=10&height=350&section=header&text=CMNAI&fontSize=90&desc=노인%20치매%20예방%20및%20재활%20프로그램&descSize=25&descAlignY=75)
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
-#### 노인 치매 예방 보조프로그램
 
-노화방지턱의 CMNAI는 손글씨와 손운동을 통해 인지력 향상에 도움을 주는 프로그램입니다.<br>
-'손글씨'라는 아날로그적 방식으로 노년층은 보다 쉽게 프로그램에 접근할 수 있습니다.<br>
- 동시에 디지털 방식의 데이터 누적으로 사용자의 인지력 변화를 추적할 수 있습니다.
  
 ---
 ## 기획의도
@@ -29,13 +25,27 @@
   <img src="https://img.shields.io/badge/pytorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white">
 </div>
 <div align="center">
+  <img src="https://img.shields.io/badge/ec2-FF9900?style=for-the-badge&logo=amazon&logoColor=white">
+  <img src="https://img.shields.io/badge/Gunicorn-499848?style=for-the-badge&logo=gunicorn&logoColor=white">
+  <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=Nginx&logoColor=white">
+</div>
+<div align="center">
   <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white">
   <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
 </div>
 
 ---
 
-## 🪄구현 기능
+## 🙌사용 기술
+### OCR<br>
+> 지정한 영역 내의 글자를 자동으로 인식하는 인공지능 기술
+### KoBERT<br>
+> SKTBrain에서 기존 BERT의 한국어 성능 한계를 극복하기 위해 위키피디아, 뉴스 등에서 수집한 한국어 문장으로 학습하여 개발된 모델
+### Tensorflow.js
+> Javascript 로 실행할 수 있는 오픈소스 머신러닝 라이브러리
+---
+
+## 🪄콘텐츠
 
 > ### 오늘의 일기
 > 웹 사이트에 구현된 원고지에 손글씨로 일상을 기록하며 과거 회상이 가능합니다.
@@ -53,10 +63,5 @@
 > * 로보트와 가위바위보
 > > 로봇과 랜덤으로 가위바위보 게임을 할 수 있습니다.
 
----
-<a href="https://billowy-bag-87f.notion.site/2023-03-01-2023-03-31-d03d8d70933943028175273800cc911c"><img src="https://img.shields.io/badge/CMNAI-ffffff?style=for-the-badge&logo=notion&logoColor=black"/>
- 
- 
 --- 
-### CMNAI : 프로젝트 폴더
-### Process : 분업별 자료들
+ 
