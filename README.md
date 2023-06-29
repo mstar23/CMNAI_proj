@@ -7,10 +7,9 @@
 ---
 ## 프로젝트 개요
 <div align="center">
- <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/eadc74e1-a27b-497a-8fd9-1944d3d994be" width="500" height="300"/>
+ <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/7ffef492-b2c2-4e58-96f1-7233a8ff0488" width="500" height="300">
+ <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/ee11e916-bd89-4ae8-bf79-4c4d9b292115" width="700">
 </div>
-
-
 
 ---
 ## ⚒️기술 스택
