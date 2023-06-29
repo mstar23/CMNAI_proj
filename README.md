@@ -2,11 +2,8 @@
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 
-<div align="center">
-  <a href="https://youtu.be/-zNDuX9tTr8">
-    <img src="https://github.com/mstar23/CMNAI_proj/assets/117613860/0b56eb78-13d3-4de2-a0bb-f0c8c940869a">
-  </a>
-</div>
+
+[![LYNMP 로고](https://github.com/mstar23/CMNAI_proj/assets/117613860/0b56eb78-13d3-4de2-a0bb-f0c8c940869a)](https://youtu.be/-zNDuX9tTr8)
 
 ---
 ## 🎈프로젝트 개요
