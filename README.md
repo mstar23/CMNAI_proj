@@ -2,6 +2,11 @@
 
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 
+<video controls>
+  <source src="https://youtu.be/-zNDuX9tTr8" type="video/webm">
+  <source src="https://youtu.be/-zNDuX9tTr8" type="video/mp4">
+  <p>Your browser cannot play the provided video file.</p>
+</video>
  
 ---
 ## 프로젝트 개요
