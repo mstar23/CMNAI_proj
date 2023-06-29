@@ -3,8 +3,8 @@
 ## 👴🏻프로젝트 'CMNAI' 👵🏻
 
 <div align="center">
-  <a href="https://youtu.be/-zNDuX9tTr8" target="_blank">
-    <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/27be8efd-6bda-40e3-8d58-cf574d6de1b8/">
+  <a href="https://youtu.be/-zNDuX9tTr8">
+    <img src="https://github.com/mstar23/CMNAI_proj/assets/117613860/8ac374cb-ab56-4460-9320-7d0067545e77">
   </a>
 </div>
 ---
