@@ -70,5 +70,9 @@
 
 --- 
 ## 👥Members
+<div align="center">
+  <img src="https://github.com/mstar23/CMNAI_proj/assets/117613860/70310d80-2b5f-48df-9f58-00fcf35aa1ea">
+</div>
 
- 
+
+
