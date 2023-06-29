@@ -4,7 +4,12 @@
 
  
 ---
-## 기획의도
+## 프로젝트 개요
+<div align="center">
+ <img src="https://github.com/mstar23/CMNAI_proj/assets/79824241/eadc74e1-a27b-497a-8fd9-1944d3d994be" width="500" height="300"/>
+</div>
+
+
 
 ---
 ## ⚒️기술 스택
@@ -64,4 +69,6 @@
 > > 로봇과 랜덤으로 가위바위보 게임을 할 수 있습니다.
 
 --- 
+## 👥Members
+
  
